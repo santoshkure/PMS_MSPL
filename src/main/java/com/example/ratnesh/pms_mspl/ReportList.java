@@ -55,23 +55,6 @@ public class ReportList extends AppCompatActivity {
         projectId = getProjectId.getStringExtra("project_id");
         projectName = getProjectId.getStringExtra("project_name");
 
-        /*String[] array ={"a","ab","a","abc","abc","a","ab","ab","a"};
-        Map<String,Integer> hm1 = new HashMap();
-        Map<String,Integer> hm = new HashMap();
-
-        for(String x:array){
-
-            if(!hm.containsKey(x)){
-                hm.put(x,1);
-               // hm1.put(x, 1);
-            }else{
-                hm.put(x, hm.get(x)+1);
-                hm1.put(x, 1);
-
-            }
-        }
-        Log.d("dsfasa", String.valueOf(hm1));*/
-
         projectNameTextView = (TextView)findViewById(R.id.project_name);
         projectNameTextView.setText(projectName);
 

@@ -133,7 +133,47 @@ public class ReportDetails extends AppCompatActivity {
 
         ArrayList<ReportDetailsModel> reportsComplected = new ArrayList<>();
         ArrayList<ReportDetailsModel> reportsPending = new ArrayList<>();
-        String location = "";
+
+        Map<String, Integer> locationNamesMap = new HashMap();
+
+        int count = 0;
+        for (int i=0; i<reports.size(); i++) {
+
+            if (!locationNamesMap.containsKey(reports.get(i).getLocationName())) {
+                locationNamesMap.put(reports.get(i).getLocationName(), 1);
+                // hm1.put(x, 1);
+            } else {
+                count++;
+                locationNamesMap.put(reports.get(i).getLocationName(), locationNamesMap.get(reports.get(i).getLocationName())+1);
+
+            }
+        }
+
+        Log.d("dsfasa", String.valueOf(locationNamesMap));
+
+        for (Map.Entry<String,Integer> entry : locationNamesMap.entrySet()) {
+
+            for (int j = 0; j < reports.size(); j++) {
+
+                if(reports.get(j).getLocationName().equals(entry.getKey())){
+
+                    for (int k = 0; k < entry.getValue(); k++) {
+                        if (reports.get(j).getProgressStatus().equals("Yes")) {
+                            reportsComplected.add(reports.get(j));
+                        }
+                        else {
+
+                            reportsPending.add(reports.get(j));
+                            Log.d("dsfadsf", reports.get(j).getLocationName());
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        /*String location = "";
         for (int i=0; i<reports.size()-1; i++) {
             if (!reports.get(i).getLocationName().equals(location)) {
                 if (reports.get(i).getProgressStatus().equals("Yes") &&
@@ -163,16 +203,16 @@ public class ReportDetails extends AppCompatActivity {
                     reportsPending1.add(reports.get(j));
                 }
             }
-        }
+        }*/
 
-        if(status.equals("pending")){
-            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsPending1);
-            reportDetailsDataListView.setAdapter(adapter );
-        }
-        else if (status.equals("complected")) {
-            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsComplected1);
-            reportDetailsDataListView.setAdapter(adapter);
-        }
+//        if(status.equals("pending")){
+//            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsPending1);
+//            reportDetailsDataListView.setAdapter(adapter );
+//        }
+//        else if (status.equals("complected")) {
+//            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsComplected1);
+//            reportDetailsDataListView.setAdapter(adapter);
+//        }
 
 
     }
