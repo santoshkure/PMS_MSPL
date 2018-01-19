@@ -21,7 +21,7 @@
             android:layout_height="match_parent"
             android:id="@+id/report_data"
             android:divider="@color/gray"
-            android:dividerHeight="2dp">
+            android:dividerHeight="@dimen/margin_medium">
 
         </ListView>
 

@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -180,25 +181,25 @@ public class ReportList extends AppCompatActivity {
         row1.setLayoutParams(lp);
 
         locationNameTextView = new TextView(ReportList.this);
-        locationNameTextView.setText("CATEGORY");
+        locationNameTextView.setText("Category");
         locationNameTextView.setPadding(10, 10, 10, 10);
         locationNameTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(locationNameTextView);
 
         categoryTextView = new TextView(ReportList.this);
-        categoryTextView.setText("TOTAL LOCATION");
+        categoryTextView.setText("Total Locations");
         categoryTextView.setPadding(10, 10, 10, 10);
         categoryTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(categoryTextView);
 
         categoryTextView = new TextView(ReportList.this);
-        categoryTextView.setText("COMPLETED");
+        categoryTextView.setText("Complected");
         categoryTextView.setPadding(10, 10, 10, 10);
         categoryTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(categoryTextView);
 
         categoryTextView = new TextView(ReportList.this);
-        categoryTextView.setText("PENDING");
+        categoryTextView.setText("Pending");
         categoryTextView.setPadding(10, 10, 10, 10);
         categoryTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(categoryTextView);
@@ -217,7 +218,7 @@ public class ReportList extends AppCompatActivity {
 
             reports.add(report);
 
-            final String locationName = actor.getString("location_count");
+            final String locationCount = actor.getString("location_count");
             final String category = actor.getString("category_location");
 
             row2 = new TableRow(ReportList.this);
@@ -230,45 +231,53 @@ public class ReportList extends AppCompatActivity {
             row2.addView(locationNameTextView);
 
             categoryTextView = new TextView(ReportList.this);
-            categoryTextView.setText(locationName);
-            categoryTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+            categoryTextView.setText(locationCount);
+            categoryTextView.setGravity(Gravity.CENTER);
             categoryTextView.setPadding(10, 10, 10, 10);
             row2.addView(categoryTextView);
 
             complectedTextView = new TextView(ReportList.this);
             complectedTextView.setText(complectedStatusArray.get(i));
-            complectedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+            complectedTextView.setGravity(Gravity.CENTER);
             complectedTextView.setPadding(10, 10, 10, 10);
             complectedTextView.setId(i);
-            complectedTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent complectedIntent = new Intent(getApplicationContext(), ReportDetails.class);
-                    complectedIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
-                    complectedIntent.putExtra("project_id", projectId);
-                    complectedIntent.putExtra("status", "complected");
-                    startActivity(complectedIntent);
-                }
-            });
+
+            if(! (Integer.parseInt(complectedStatusArray.get(i)) == 0)) {
+                complectedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                complectedTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent complectedIntent = new Intent(getApplicationContext(), ReportDetails.class);
+                        complectedIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
+                        complectedIntent.putExtra("project_id", projectId);
+                        complectedIntent.putExtra("status", "complected");
+                        startActivity(complectedIntent);
+                    }
+                });
+            }
 
             row2.addView(complectedTextView);
 
             pendingTextView = new TextView(ReportList.this);
             pendingTextView.setText(pendingStatusArray.get(i));
-            pendingTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+            pendingTextView.setGravity(Gravity.CENTER);
             pendingTextView.setPadding(10, 10, 10, 10);
             pendingTextView.setId(i);
-            pendingTextView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent pendingIntent = new Intent(getApplicationContext(), ReportDetails.class);
-                    pendingIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
-                    pendingIntent.putExtra("project_id", projectId);
-                    pendingIntent.putExtra("status", "pending");
-                    startActivity(pendingIntent);
 
-                }
-            });
+            if(! (Integer.parseInt(pendingStatusArray.get(i)) == 0)) {
+                pendingTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
+                pendingTextView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent pendingIntent = new Intent(getApplicationContext(), ReportDetails.class);
+                        pendingIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
+                        pendingIntent.putExtra("project_id", projectId);
+                        pendingIntent.putExtra("status", "pending");
+                        startActivity(pendingIntent);
+
+                    }
+                });
+            }
             row2.addView(pendingTextView);
 
             indexRow = i;

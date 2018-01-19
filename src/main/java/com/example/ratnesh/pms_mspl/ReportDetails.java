@@ -39,7 +39,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class ReportDetails extends AppCompatActivity {
 
@@ -135,85 +137,59 @@ public class ReportDetails extends AppCompatActivity {
         ArrayList<ReportDetailsModel> reportsPending = new ArrayList<>();
 
         Map<String, Integer> locationNamesMap = new HashMap();
+        Map<String, Integer> locationNamesMapPending = new HashMap();
 
-        int count = 0;
         for (int i=0; i<reports.size(); i++) {
 
             if (!locationNamesMap.containsKey(reports.get(i).getLocationName())) {
                 locationNamesMap.put(reports.get(i).getLocationName(), 1);
-                // hm1.put(x, 1);
-            } else {
-                count++;
-                locationNamesMap.put(reports.get(i).getLocationName(), locationNamesMap.get(reports.get(i).getLocationName())+1);
-
             }
         }
 
-        Log.d("dsfasa", String.valueOf(locationNamesMap));
-
         for (Map.Entry<String,Integer> entry : locationNamesMap.entrySet()) {
-
             for (int j = 0; j < reports.size(); j++) {
-
-                if(reports.get(j).getLocationName().equals(entry.getKey())){
-
-                    for (int k = 0; k < entry.getValue(); k++) {
-                        if (reports.get(j).getProgressStatus().equals("Yes")) {
-                            reportsComplected.add(reports.get(j));
-                        }
-                        else {
-
-                            reportsPending.add(reports.get(j));
-                            Log.d("dsfadsf", reports.get(j).getLocationName());
+                if (reports.get(j).getLocationName().equals(entry.getKey())) {
+                    if (!reports.get(j).getProgressStatus().equals("Yes")) {
+                        if (!locationNamesMapPending.containsKey(reports.get(j).getLocationName())) {
+                            locationNamesMapPending.put(reports.get(j).getLocationName(), 1);
                         }
                     }
                 }
             }
-
         }
 
+        if(locationNamesMapPending.size()>0) {
+            for (Map.Entry<String, Integer> entry : locationNamesMapPending.entrySet()) {
+                for (int j = 0; j < reports.size(); j++) {
+                    if (reports.get(j).getLocationName().equals(entry.getKey())) {
+                        reportsPending.add(reports.get(j));
+                    } else {
+                        if (!locationNamesMapPending.containsKey(reports.get(j).getLocationName())) {
+                            Set<ReportDetailsModel> set = new HashSet<ReportDetailsModel>(reportsComplected);
 
-        /*String location = "";
-        for (int i=0; i<reports.size()-1; i++) {
-            if (!reports.get(i).getLocationName().equals(location)) {
-                if (reports.get(i).getProgressStatus().equals("Yes") &&
-                        reports.get(i+1).getProgressStatus().equals("Yes")) {
-                    reportsComplected.add(reports.get(i));
-                    location = reports.get(i).getLocationName();
-                } else {
-                    location = reports.get(i).getLocationName();
-                    reportsPending.add(reports.get(i));
+                            if (!(set.size() < reportsComplected.size())) {
+                                reportsComplected.add(reports.get(j));
+                            }
+                        }
+                    }
                 }
+            }
+            if(reportsComplected.size() > 0) {
+                reportsComplected.remove(reportsComplected.size()-1);
             }
         }
-
-        ArrayList<ReportDetailsModel> reportsComplected1 = new ArrayList<>();
-        ArrayList<ReportDetailsModel> reportsPending1 = new ArrayList<>();
-        for(int i=0; i<reportsComplected.size(); i++) {
-            for(int j=0; j<reports.size(); j++) {
-                if(reportsComplected.get(i).getLocationName().equals(reports.get(j).getLocationName())){
-                    reportsComplected1.add(reports.get(j));
-                }
-            }
+        else{
+            reportsComplected = reports;
         }
 
-        for(int i=0; i<reportsPending.size(); i++) {
-            for(int j=0; j<reports.size(); j++) {
-                if(reportsPending.get(i).getLocationName().equals(reports.get(j).getLocationName())){
-                    reportsPending1.add(reports.get(j));
-                }
-            }
-        }*/
+        if(status.equals("pending")){
+            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsPending);
+            reportDetailsDataListView.setAdapter(adapter );
+        }
 
-//        if(status.equals("pending")){
-//            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsPending1);
-//            reportDetailsDataListView.setAdapter(adapter );
-//        }
-//        else if (status.equals("complected")) {
-//            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsComplected1);
-//            reportDetailsDataListView.setAdapter(adapter);
-//        }
-
-
+        else if (status.equals("complected")) {
+            CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsComplected);
+            reportDetailsDataListView.setAdapter(adapter);
+        }
     }
 }
