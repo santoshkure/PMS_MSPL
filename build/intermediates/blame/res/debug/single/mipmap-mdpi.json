@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher_round.png",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    }
+]

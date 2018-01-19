@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">PMS_MSPL</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_project">Project</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_projects">Projects</string>
+    <string name="title_activity_project_details">ProjectDetails</string>
+
+    <string-array name="status_type">
+        <item>Select Status</item>
+        <item>Yes</item>
+        <item>No</item>
+        <item>Partially</item>
+    </string-array>
+    <string name="title_activity_add_location">AddLocation</string>
+    <string name="title_activity_edit_loction_details">EditLoctionDetails</string>
+    <string name="title_activity_progress_status">ProgressStatus</string>
+    <string name="title_activity_add_progress">AddProgress</string>
+    <string name="title_activity_progress_item_list">Progress List</string>
+    <string name="title_activity_add_progress_category">Add Progress of Category</string>
+    <string name="title_activity_reports">Reports</string>
+    <string name="title_activity_report_list">ReportList</string>
+    <string name="title_activity_report_details">ReportDetails</string>
+</resources>
