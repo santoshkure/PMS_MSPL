@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.ratnesh.pms_mspl.AddProgress"
+    tools:showIn="@layout/activity_add_progress">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_normal"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:id="@+id/project_name"
+            android:background="@color/colorWhite"
+            android:layout_marginBottom="2dp">
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Project Name"
+                    android:padding="@dimen/padding_normal"
+                    android:textStyle="bold"
+                    android:id="@+id/error"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/padding_normal"
+                    android:id="@+id/sn"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <HorizontalScrollView
+            android:id="@+id/horizontalView"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal|vertical"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dip">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="*"
+                android:background="#ffffff"
+                android:layout_centerInParent="true"
+                android:id="@+id/display_table_layout"
+                android:layout_marginBottom="20dp">
+
+            </TableLayout>
+        </HorizontalScrollView>
+
+        <ImageView
+            android:id="@+id/imageView_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/button_selectpic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:background="@color/colorPrimary"
+            android:text=" Select Image"
+            android:paddingLeft="@dimen/padding_normal"
+            android:paddingRight="@dimen/padding_normal"
+            android:textColor="@color/colorWhite"
+            android:drawableLeft="@drawable/attach"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:text="Click To Upload File"
+            android:id="@+id/uploadButton"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorWhite"
+            android:textAllCaps="false"/>
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/messageText"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/etxtUpload"
+            android:layout_centerHorizontal="true" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

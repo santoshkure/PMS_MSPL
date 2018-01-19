@@ -1,0 +1,210 @@
+-- Merging decision tree log ---
+manifest
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:2:1-78:12
+	package
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:3:5-43
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:5:22-64
+application
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:7:5-76:19
+MERGED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\e1c799a803d20ce7eb5bed4dbf7701377a8be416\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\efa07a13d8e1ccac8cde02a9aa7a9b12ef32c0af\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\71e4540284358c3ce7062466c6e5aa61b50155cb\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\84b604df13b57341856551e2a7a51112cf4131fb\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\4d4298d67a846649b30405a4bfeb16b0cbdeacf9\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\bcb57ba251f3567ced84ea59dc05558157f04973\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\ca0fc545ba3a27c385d1c1aa0dc6d88ed3b3cc5b\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\b59974750f40f2113fa32b2661ae7e73627c2806\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\c02fb7402813636ddefaf4dfeeb7f2852a3a18bc\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\16676758ccfd4a4c12d06241d72d13e397e23337\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.volley:volley:1.0.0] C:\Users\Ratnesh\.android\build-cache\c929b359fd28ef3b56a83a1870e3347e139b934a\output\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Ratnesh\.android\build-cache\22e24f8e396a610da3539a965159c1e2fa87bd84\output\AndroidManifest.xml:9:5-20
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:10:9-41
+	android:supportsRtl
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:12:9-35
+	android:roundIcon
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:11:9-54
+	android:allowBackup
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:8:9-35
+	android:icon
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:9:9-43
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:13:9-40
+activity#com.example.ratnesh.pms_mspl.Login
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:14:9-23:20
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:16:13-34
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:17:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:15:13-34
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:18:13-22:29
+action#android.intent.action.MAIN
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:19:17-69
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:19:25-66
+category#android.intent.category.LAUNCHER
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:21:17-77
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:21:27-74
+activity#com.example.ratnesh.pms_mspl.MainActivity
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:24:9-27:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:26:13-45
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:27:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:25:13-41
+activity#com.example.ratnesh.pms_mspl.Projects
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:28:9-31:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:30:13-60
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:31:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:29:13-37
+activity#com.example.ratnesh.pms_mspl.AddProject
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:32:9-35:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:34:13-60
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:35:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:33:13-39
+activity#com.example.ratnesh.pms_mspl.ProjectDetails
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:36:9-39:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:38:13-67
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:39:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:37:13-43
+activity#com.example.ratnesh.pms_mspl.AddLocation
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:40:9-43:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:42:13-64
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:43:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:41:13-40
+activity#com.example.ratnesh.pms_mspl.EditLoctionDetails
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:44:9-47:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:46:13-72
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:47:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:45:13-47
+activity#com.example.ratnesh.pms_mspl.ProgressStatus
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:48:9-51:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:50:13-67
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:51:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:49:13-43
+activity#com.example.ratnesh.pms_mspl.AddProgress
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:52:9-55:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:54:13-64
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:55:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:53:13-40
+activity#com.example.ratnesh.pms_mspl.ProgressCategoryList
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:56:9-59:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:58:13-70
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:59:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:57:13-49
+activity#com.example.ratnesh.pms_mspl.AddProgressCategory
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:60:9-63:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:62:13-73
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:63:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:61:13-48
+activity#com.example.ratnesh.pms_mspl.Reports
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:64:9-67:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:66:13-59
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:67:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:65:13-36
+activity#com.example.ratnesh.pms_mspl.ReportList
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:68:9-71:59
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:70:13-63
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:71:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:69:13-39
+activity#com.example.ratnesh.pms_mspl.ReportDetails
+ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:72:9-75:68
+	android:label
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:74:13-66
+	android:theme
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:75:13-56
+	android:name
+		ADDED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml:73:13-42
+uses-sdk
+INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\e1c799a803d20ce7eb5bed4dbf7701377a8be416\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\efa07a13d8e1ccac8cde02a9aa7a9b12ef32c0af\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\71e4540284358c3ce7062466c6e5aa61b50155cb\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:recyclerview-v7:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\8f6c4548e60aba4153a91675f2bdeac8f90c5755\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:transition:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\84b604df13b57341856551e2a7a51112cf4131fb\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\4d4298d67a846649b30405a4bfeb16b0cbdeacf9\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\bcb57ba251f3567ced84ea59dc05558157f04973\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\ca0fc545ba3a27c385d1c1aa0dc6d88ed3b3cc5b\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\b59974750f40f2113fa32b2661ae7e73627c2806\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\c02fb7402813636ddefaf4dfeeb7f2852a3a18bc\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\16676758ccfd4a4c12d06241d72d13e397e23337\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.volley:volley:1.0.0] C:\Users\Ratnesh\.android\build-cache\c929b359fd28ef3b56a83a1870e3347e139b934a\output\AndroidManifest.xml:7:5-43
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\Ratnesh\.android\build-cache\22e24f8e396a610da3539a965159c1e2fa87bd84\output\AndroidManifest.xml:5:5-7:41
+MERGED from [me.relex:circleindicator:1.1.5] C:\Users\Ratnesh\.android\build-cache\0ed6c364f610da0f04c31fa64f0b87af600b5b24\output\AndroidManifest.xml:8:5-10:41
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+		INJECTED from G:\adnroid-workspace\PMS_MSPL\app\src\main\AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:appcompat-v7:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\e1c799a803d20ce7eb5bed4dbf7701377a8be416\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:animated-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\efa07a13d8e1ccac8cde02a9aa7a9b12ef32c0af\output\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-vector-drawable:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\71e4540284358c3ce7062466c6e5aa61b50155cb\output\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:recyclerview-v7:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\8f6c4548e60aba4153a91675f2bdeac8f90c5755\output\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:transition:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\84b604df13b57341856551e2a7a51112cf4131fb\output\AndroidManifest.xml:22:5-24:41
+MERGED from [com.android.support:support-v4:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\4d4298d67a846649b30405a4bfeb16b0cbdeacf9\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-media-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\bcb57ba251f3567ced84ea59dc05558157f04973\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-fragment:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\ca0fc545ba3a27c385d1c1aa0dc6d88ed3b3cc5b\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-ui:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\b59974750f40f2113fa32b2661ae7e73627c2806\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-core-utils:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\c02fb7402813636ddefaf4dfeeb7f2852a3a18bc\output\AndroidManifest.xml:25:5-27:41
+MERGED from [com.android.support:support-compat:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\16676758ccfd4a4c12d06241d72d13e397e23337\output\AndroidManifest.xml:25:5-27:41
+	android:value
+		ADDED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:27:9-38
+	android:name
+		ADDED from [com.android.support:design:26.0.0-alpha1] C:\Users\Ratnesh\.android\build-cache\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\output\AndroidManifest.xml:26:9-47

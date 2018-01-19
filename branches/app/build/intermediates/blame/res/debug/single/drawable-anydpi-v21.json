@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_share.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_share.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\design_ic_visibility.xml",
+        "source": "C:\\Users\\Ratnesh\\.android\\build-cache\\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\\output\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_gallery.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_gallery.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_slideshow.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_slideshow.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_manage.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_manage.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_send.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_send.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\ic_menu_camera.xml",
+        "source": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\generated\\res\\pngs\\debug\\drawable-anydpi-v21\\ic_menu_camera.xml"
+    },
+    {
+        "merged": "G:\\adnroid-workspace\\PMS_MSPL\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21\\design_ic_visibility_off.xml",
+        "source": "C:\\Users\\Ratnesh\\.android\\build-cache\\91d9a9d1e4e32a3d54340e0d9f253e9f6059a3d5\\output\\res\\drawable-anydpi-v21\\design_ic_visibility_off.xml"
+    }
+]
