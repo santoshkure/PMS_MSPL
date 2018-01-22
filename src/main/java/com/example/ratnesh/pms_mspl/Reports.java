@@ -57,13 +57,11 @@ public class Reports extends AppCompatActivity {
         finish();
     }
 
-    private void viewProjects(){
-
+    private void viewProjects() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_PROJECTNAMES,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
 
                             final JSONObject obj = new JSONObject(response);
@@ -80,7 +78,6 @@ public class Reports extends AppCompatActivity {
                                     row2 = new TableRow(Reports.this);
                                     row2.setBackground(getResources().getDrawable(R.drawable.border));
                                     row2.setLayoutParams(lp);
-
 
                                     projectNameTextView = new TextView(Reports.this);
                                     projectNameTextView.setText(projectName);
@@ -119,7 +116,6 @@ public class Reports extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         if (error instanceof TimeoutError) {
                             Toast.makeText(getApplicationContext(), "Session Time out, Please Login Again...", Toast.LENGTH_LONG).show();
                         } else if (error instanceof AuthFailureError) {

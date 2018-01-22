@@ -140,7 +140,6 @@ public class ReportDetails extends AppCompatActivity {
         Map<String, Integer> locationNamesMapPending = new HashMap();
 
         for (int i=0; i<reports.size(); i++) {
-
             if (!locationNamesMap.containsKey(reports.get(i).getLocationName())) {
                 locationNamesMap.put(reports.get(i).getLocationName(), 1);
             }
@@ -191,5 +190,6 @@ public class ReportDetails extends AppCompatActivity {
             CustomListAdapter adapter = new CustomListAdapter(getApplicationContext(), reportsComplected);
             reportDetailsDataListView.setAdapter(adapter);
         }
+
     }
 }
