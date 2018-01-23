@@ -35,4 +35,9 @@ dependencies {
     compile 'org.apache.httpcomponents:httpcore:4.4.1'
     compile 'org.apache.httpcomponents:httpclient:4.5'
     testCompile 'junit:junit:4.12'
+
+    compile 'com.github.nileshpambhar:MultiPhotoPicker:v1.2'
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.9.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.commit451:PhotoView:1.2.4'
 }

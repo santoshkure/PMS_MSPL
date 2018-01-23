@@ -10,7 +10,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="stateHidden">
         <activity
             android:name=".Login"
             android:label="Login"
@@ -61,7 +62,8 @@
         <activity
             android:name=".AddProgressCategory"
             android:label="@string/title_activity_add_progress_category"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".Reports"
             android:label="@string/title_activity_reports"
@@ -73,6 +75,10 @@
         <activity
             android:name=".ReportDetails"
             android:label="@string/title_activity_report_details"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ZoomActivity"
+            android:label="@string/title_activity_zoom"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -186,6 +186,12 @@
                 android:visibility="gone"
                 android:padding="@dimen/padding_small"/>
 
+            <Gallery
+                android:id="@+id/gallery"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/button_selectpic"
                 android:layout_width="wrap_content"

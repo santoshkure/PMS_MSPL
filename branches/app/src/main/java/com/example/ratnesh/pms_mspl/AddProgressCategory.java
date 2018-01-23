@@ -18,10 +18,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -44,21 +46,24 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.nileshp.multiphotopicker.photopicker.activity.PickImageActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-public class AddProgressCategory extends AppCompatActivity implements View.OnClickListener{
+public class AddProgressCategory extends AppCompatActivity implements View.OnClickListener {
 
     private String progress_category_id, projectId, locationId, progressCategoryName, projectName, locationName;
     private TextView messageText, projectNameTextView, locationNameTextView, categoryNameTextView;
@@ -72,6 +77,8 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
     int i = 0;
     private RadioGroup statusRadioGroup;
     private RadioButton statusRadioButton, yesRadioButton, noRadioButton, partiallyRadioButton;
+    private ArrayList<String> pathList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,9 +94,9 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         projectName = getIntent.getStringExtra("project_name");
         locationName = getIntent.getStringExtra("location_name");
 
-        projectNameTextView = (TextView)findViewById(R.id.project_name);
-        locationNameTextView = (TextView)findViewById(R.id.location_name);
-        categoryNameTextView = (TextView)findViewById(R.id.category_name);
+        projectNameTextView = (TextView) findViewById(R.id.project_name);
+        locationNameTextView = (TextView) findViewById(R.id.location_name);
+        categoryNameTextView = (TextView) findViewById(R.id.category_name);
         projectNameTextView.setText(projectName);
         locationNameTextView.setText(locationName);
         categoryNameTextView.setText(progressCategoryName);
@@ -99,14 +106,13 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         noRadioButton = (RadioButton) findViewById(R.id.no_radio_button);
         partiallyRadioButton = (RadioButton) findViewById(R.id.partially_radio_button);
 
-        progressDateEditText = (EditText)findViewById(R.id.progress_date);
-        remarkEditText = (EditText)findViewById(R.id.remark);
-        uploadButton = (Button)findViewById(R.id.submit);
-        btnselectpic = (Button)findViewById(R.id.button_selectpic);
-        messageText  = (TextView)findViewById(R.id.messageText);
-        imageview = (ImageView)findViewById(R.id.imageView_pic);
+        progressDateEditText = (EditText) findViewById(R.id.progress_date);
+        remarkEditText = (EditText) findViewById(R.id.remark);
+        uploadButton = (Button) findViewById(R.id.submit);
+        btnselectpic = (Button) findViewById(R.id.button_selectpic);
+        messageText = (TextView) findViewById(R.id.messageText);
+        imageview = (ImageView) findViewById(R.id.imageView_pic);
         //etxtUpload = (EditText)findViewById(R.id.etxtUpload);
-
 
         btnselectpic.setOnClickListener(this);
         uploadButton.setOnClickListener(this);
@@ -123,12 +129,12 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 //To show current date in the datepicker
-                final Calendar mcurrentDate=Calendar.getInstance();
+                final Calendar mcurrentDate = Calendar.getInstance();
                 int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth=mcurrentDate.get(Calendar.MONTH);
-                int mDay=mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                int mMonth = mcurrentDate.get(Calendar.MONTH);
+                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog mDatePicker=new DatePickerDialog(AddProgressCategory.this, new DatePickerDialog.OnDateSetListener() {
+                DatePickerDialog mDatePicker = new DatePickerDialog(AddProgressCategory.this, new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                         // TODO Auto-generated method stub
                         mcurrentDate.set(Calendar.YEAR, selectedyear);
@@ -139,9 +145,10 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
 
                         progressDateEditText.setText(sdf.format(mcurrentDate.getTime()));
                     }
-                },mYear, mMonth, mDay);
+                }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select date");
-                mDatePicker.show();  }
+                mDatePicker.show();
+            }
         });
 
         setProgressCategoryDetails();
@@ -153,8 +160,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         finish();
     }
 
-    private void setProgressCategoryDetails(){
-
+    private void setProgressCategoryDetails() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_ADDPROGRESSCATEGORY,
                 new Response.Listener<String>() {
                     @Override
@@ -171,35 +177,49 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                     progressDate = "";
                                     progressStatus = "";
                                     progressRemark = "";
-                                }
-                                else {
+                                } else {
                                     progressDate = actor.getString("progress_date");
                                     progressStatus = actor.getString("progress_status");
 
-                                    if(progressStatus.equals("Yes")){
+                                    if (progressStatus.equals("Yes")) {
                                         yesRadioButton.setChecked(true);
-                                    }
-                                    else if(progressStatus.equals("No")){
+                                        uploadButton.setVisibility(View.GONE);
+                                    } else if (progressStatus.equals("No")) {
                                         noRadioButton.setChecked(true);
-                                    }
-                                    else{
+                                    } else {
                                         partiallyRadioButton.setChecked(true);
                                     }
                                     progressRemark = actor.getString("progress_remark");
                                     String imagePath = actor.getString("image_path");
-                                    uploadButton.setText("Update");
-                                    if(!imagePath.equals("null")) {
-                                        imageview.setVisibility(View.VISIBLE);
-                                        new DownLoadImageTask(imageview).execute(imagePath);
+                                    if (!imagePath.equals("null")) {
+                                        pathList = new ArrayList<String>();
+                                        if (imagePath.contains(",")) {
+                                            String[] str = imagePath.split(",");
+                                            for (int j = 0; j < str.length; j++) {
+                                                pathList.add(str[j]);
+                                            }
+                                        } else {
+                                            pathList.add(imagePath);
+                                        }
                                         btnselectpic.setVisibility(View.GONE);
                                     }
+
+                                    if (pathList != null && !pathList.isEmpty()) {
+                                        SetToGallary();
+                                    }
+
+                                    uploadButton.setText("Update");
+//                                    if (!imagePath.equals("null")) {
+//                                        imageview.setVisibility(View.VISIBLE);
+//                                        new DownLoadImageTask(imageview).execute(imagePath);
+//                                        btnselectpic.setVisibility(View.GONE);
+//                                    }
                                 }
                                 progressDateEditText.setText(progressDate);
                                 remarkEditText.setText(progressRemark);
 
                             }
-                        }
-                        catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -220,10 +240,10 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                             Toast.makeText(getApplicationContext(), "JSONArray Problem", Toast.LENGTH_LONG).show();
                         }
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("project_id", projectId);
                 params.put("location_id", locationId);
                 params.put("progress_category_id", progress_category_id);
@@ -240,23 +260,42 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.button_selectpic:
-                imageview.setVisibility(View.VISIBLE);
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, URLs.REQCODE);
+                Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
+                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MAX_IMAGE, 60);
+                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
+                startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
+
+//                imageview.setVisibility(View.VISIBLE);
+//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                startActivityForResult(intent, URLs.REQCODE);
                 break;
             case R.id.submit:
-                Toast.makeText(getApplicationContext(), "fsf", Toast.LENGTH_LONG).show();
-
-                statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
-
-                Bitmap image = ((BitmapDrawable) imageview.getDrawable()).getBitmap();
-                dialog.show();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
                 try {
+                    Toast.makeText(getApplicationContext(), "fsf", Toast.LENGTH_LONG).show();
+
+                    statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
+
+//                Bitmap image = ((BitmapDrawable) imageview.getDrawable()).getBitmap();
+                    ArrayList<String> str = new ArrayList<String>();
+
+                    JSONArray jsonArray = new JSONArray();
+
+                    dialog.show();
+                    for (int i = 0; i < pathList.size(); i++) {
+                        File imgFile = new File(pathList.get(i));
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                        String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                        jsonArray.put(a);
+
+                    }
+
+//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//                String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
                     jsonObject.put("project_id", projectId);
                     jsonObject.put("location_id", locationId);
                     jsonObject.put("progress_category_id", progress_category_id);
@@ -264,10 +303,9 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                     jsonObject.put("progress_date", progressDateEditText.getText().toString());
                     jsonObject.put("remark", remarkEditText.getText().toString());
                     //jsonObject.put("image_name", etxtUpload.getText().toString().trim());
-                    jsonObject.put("image", encodedImage);
-
-                }
-                catch (JSONException e) {
+                    jsonObject.put("image", jsonArray);
+                    jsonObject.put("request_type", uploadButton.getText().toString());
+                } catch (JSONException e) {
                     Log.e("JSONObject Here", e.toString());
                 }
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URLs.URL_INSERTPROGRESSCATEGORY, jsonObject,
@@ -281,7 +319,6 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                 Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
                                 startActivity(intent);
                                 finish();
-
                             }
                         }, new Response.ErrorListener() {
                     @Override
@@ -304,11 +341,36 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             Uri selectedImageUri = data.getData();
             imageview.setImageURI(selectedImageUri);
         }
+        if (resultCode == -1 && requestCode == PickImageActivity.PICKER_REQUEST_CODE) {
+            this.pathList = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
+            if (this.pathList != null && !this.pathList.isEmpty()) {
+                SetToGallary();
+            }
+        }
     }
 
-    public static class DownLoadImageTask extends AsyncTask<String,Void,Bitmap> {
+    public void SetToGallary() {
+        Gallery gallery = (Gallery) findViewById(R.id.gallery);
+        gallery.setVisibility(View.VISIBLE);
+        gallery.setSpacing(10);
+        final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(this, pathList);
+        gallery.setAdapter(galleryImageAdapter);
+        gallery.setSelection(1);
+
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getApplicationContext(), ZoomActivity.class);
+                i.putExtra("image", pathList.get(position));
+                startActivity(i);
+            }
+        });
+    }
+
+    public static class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView imageView;
-        public DownLoadImageTask(ImageView imageView){
+
+        public DownLoadImageTask(ImageView imageView) {
             this.imageView = imageView;
         }
 
@@ -316,17 +378,17 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             doInBackground(Params... params)
                 Override this method to perform a computation on a background thread.
          */
-        protected Bitmap doInBackground(String...urls){
+        protected Bitmap doInBackground(String... urls) {
             String urlOfImage = urls[0];
             Bitmap logo = null;
-            try{
+            try {
                 InputStream is = new URL(urlOfImage).openStream();
                 /*
                     decodeStream(InputStream is)
                         Decode an input stream into a bitmap.
                  */
                 logo = BitmapFactory.decodeStream(is);
-            }catch(Exception e){ // Catch the download exception
+            } catch (Exception e) { // Catch the download exception
                 e.printStackTrace();
             }
             return logo;
@@ -336,7 +398,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             onPostExecute(Result result)
                 Runs on the UI thread after doInBackground(Params...).
          */
-        protected void onPostExecute(Bitmap result){
+        protected void onPostExecute(Bitmap result) {
             imageView.setImageBitmap(result);
         }
     }
