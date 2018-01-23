@@ -45,6 +45,7 @@ public class ReportList extends AppCompatActivity {
     private TableRow row1, row2;
     int indexRow;
     ArrayList<String> complectedStatusArray, pendingStatusArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,10 +57,10 @@ public class ReportList extends AppCompatActivity {
         projectId = getProjectId.getStringExtra("project_id");
         projectName = getProjectId.getStringExtra("project_name");
 
-        projectNameTextView = (TextView)findViewById(R.id.project_name);
+        projectNameTextView = (TextView) findViewById(R.id.project_name);
         projectNameTextView.setText(projectName);
 
-        displayTableLayout = (TableLayout)findViewById(R.id.display_table_layout);
+        displayTableLayout = (TableLayout) findViewById(R.id.display_table_layout);
         viewReport();
     }
 
@@ -73,7 +74,7 @@ public class ReportList extends AppCompatActivity {
     ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
     JSONArray locationCountJSONArray;
 
-    private void viewReport(){
+    private void viewReport() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REPORTS,
                 new Response.Listener<String>() {
@@ -89,41 +90,37 @@ public class ReportList extends AppCompatActivity {
                             JSONArray locationJSONArray = obj.getJSONArray("report_list_status");
 
                             Gson gson = new Gson();
-                            for (int i=0; i<locationJSONArray.length(); i++) {
+                            for (int i = 0; i < locationJSONArray.length(); i++) {
                                 LocationDetails founderArray = gson.fromJson(String.valueOf(locationJSONArray.get(i)), LocationDetails.class);
                                 reportSatus.add(founderArray);
                             }
 
                             Boolean isComplected = false;
                             Boolean isMatched = false;
-                            complectedStatusArray =  new ArrayList<String>();
-                            pendingStatusArray =  new ArrayList<String>();
+                            complectedStatusArray = new ArrayList<String>();
+                            pendingStatusArray = new ArrayList<String>();
                             for (int i = 0; i < locationCountJSONArray.length(); i++) {
                                 String category_id = locationCountJSONArray.getJSONObject(i).getString("category_id");
-                                for(int j = 0; j < locationListJSONArray.length(); j++){
+                                for (int j = 0; j < locationListJSONArray.length(); j++) {
                                     String location_id = locationListJSONArray.getJSONObject(j).getString("location_id");
                                     isComplected = true;
                                     isMatched = false;
-                                    for (int k = 0; k < reportSatus.size(); k++ ){
+                                    for (int k = 0; k < reportSatus.size(); k++) {
                                         if (reportSatus.get(k).getCategory_id().equals(category_id) && reportSatus.get(k).getLocation_id().equals(location_id)) {
                                             isMatched = true;
-                                           if(reportSatus.get(k).getProgress_status().equals("Yes"))
-                                            {
+                                            if (reportSatus.get(k).getProgress_status().equals("Yes")) {
 
-                                            }
-                                            else{
+                                            } else {
                                                 isComplected = false;
                                                 break;
                                             }
                                         }
                                     }
-                                    if(isMatched)
-                                    {
-                                        if(isComplected){
-                                            completed = completed+1;
-                                        }
-                                        else{
-                                            partially = partially+1;
+                                    if (isMatched) {
+                                        if (isComplected) {
+                                            completed = completed + 1;
+                                        } else {
+                                            partially = partially + 1;
 
                                         }
                                     }
@@ -137,8 +134,7 @@ public class ReportList extends AppCompatActivity {
 
                             createRowData(reports);
 
-                        }
-                        catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -159,10 +155,10 @@ public class ReportList extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "JSONArray Problem", Toast.LENGTH_LONG).show();
                         }
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("project_id", projectId);
                 return params;
             }
@@ -242,7 +238,7 @@ public class ReportList extends AppCompatActivity {
             complectedTextView.setPadding(10, 10, 10, 10);
             complectedTextView.setId(i);
 
-            if(! (Integer.parseInt(complectedStatusArray.get(i)) == 0)) {
+            if (!(Integer.parseInt(complectedStatusArray.get(i)) == 0)) {
                 complectedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
                 complectedTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -264,7 +260,7 @@ public class ReportList extends AppCompatActivity {
             pendingTextView.setPadding(10, 10, 10, 10);
             pendingTextView.setId(i);
 
-            if(! (Integer.parseInt(pendingStatusArray.get(i)) == 0)) {
+            if (!(Integer.parseInt(pendingStatusArray.get(i)) == 0)) {
                 pendingTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
                 pendingTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
