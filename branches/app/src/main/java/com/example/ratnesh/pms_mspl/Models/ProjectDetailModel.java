@@ -9,6 +9,7 @@ public class ProjectDetailModel {
     String progressDate;
     String progressRemark;
     String progressStatus;
+    String imagePath;
 
     public String getProjectCategory() {
         return projectCategory;
@@ -40,5 +41,13 @@ public class ProjectDetailModel {
 
     public void setProgressStatus(String progressStatus) {
         this.progressStatus = progressStatus;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

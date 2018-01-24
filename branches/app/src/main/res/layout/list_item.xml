@@ -2,138 +2,162 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:background="@drawable/border">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
                 android:text="Project Progress"
                 android:textColor="@color/black"
-                android:padding="@dimen/padding_normal"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/project_progress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:padding="@dimen/padding_normal"
-                android:id="@+id/project_progress"/>
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:background="@drawable/border">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
                 android:text="Progress Date"
                 android:textColor="@color/black"
-                android:padding="@dimen/padding_normal"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:padding="@dimen/padding_normal"
-                android:id="@+id/date"/>
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:background="@drawable/border">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
                 android:text="Status"
                 android:textColor="@color/black"
-                android:padding="@dimen/padding_normal"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:padding="@dimen/padding_normal"
-                android:id="@+id/status"/>
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:background="@drawable/border">
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="horizontal">
+
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
                 android:text="Remark"
                 android:textColor="@color/black"
-                android:padding="@dimen/padding_normal"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_width="0dp">
+            android:layout_weight="1">
+
             <TextView
+                android:id="@+id/remark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
                 android:padding="@dimen/padding_normal"
-                android:id="@+id/remark"/>
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linLay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <Gallery
+            android:id="@+id/gallery"
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+    </LinearLayout>
+
 
 </LinearLayout>

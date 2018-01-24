@@ -353,7 +353,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         Gallery gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setVisibility(View.VISIBLE);
         gallery.setSpacing(10);
-        final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(this, pathList);
+        final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(this, pathList, "ProgressCat");
         gallery.setAdapter(galleryImageAdapter);
         gallery.setSelection(1);
 

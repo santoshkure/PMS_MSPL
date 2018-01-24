@@ -145,6 +145,7 @@ public class ReportDetails extends AppCompatActivity {
                 projectDetail.setProgressDate(actor.getString("progress_date"));
                 projectDetail.setProgressRemark(actor.getString("progress_remark"));
                 projectDetail.setProgressStatus(actor.getString("progress_status"));
+                projectDetail.setImagePath(actor.getString("image_path"));
                 project.add(projectDetail);
             } else {
                 ProjectDetailModel projectDetail = new ProjectDetailModel();
@@ -152,6 +153,7 @@ public class ReportDetails extends AppCompatActivity {
                 projectDetail.setProgressDate(actor.getString("progress_date"));
                 projectDetail.setProgressRemark(actor.getString("progress_remark"));
                 projectDetail.setProgressStatus(actor.getString("progress_status"));
+                projectDetail.setImagePath(actor.getString("image_path"));
                 project.add(projectDetail);
             }
 
@@ -189,9 +191,8 @@ public class ReportDetails extends AppCompatActivity {
 
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
         reportDetailsDataListView.setAdapter(listAdapter);
-        for(int i=0; i < listAdapter.getGroupCount(); i++)
-            reportDetailsDataListView.expandGroup(i);
-
+//        for(int i=0; i < listAdapter.getGroupCount(); i++)
+//            reportDetailsDataListView.expandGroup(i);
     }
 
     private void prepareListData(ArrayList<ReportDetailModel> reports) {

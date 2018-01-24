@@ -20,11 +20,12 @@ import java.util.ArrayList;
 public class GalleryImageAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<String> ImgPaths;
+    private String Acti;
 
-
-    public GalleryImageAdapter(Context context, ArrayList<String> ImgPaths) {
+    public GalleryImageAdapter(Context context, ArrayList<String> ImgPaths, String Acti) {
         mContext = context;
         this.ImgPaths = ImgPaths;
+        this.Acti = Acti;
     }
 
     public int getCount() {
@@ -53,15 +54,16 @@ public class GalleryImageAdapter extends BaseAdapter {
                         .into(i);
             } else {
                 File imgFile = new  File(ImgPaths.get(index));
-
                 if(imgFile.exists()){
-
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
                     i.setImageBitmap(myBitmap);
                 }
             }
-            i.setLayoutParams(new Gallery.LayoutParams(400, 400));
+            if (Acti.equals("Expandable")) {
+                i.setLayoutParams(new Gallery.LayoutParams(200, 100));
+            } else {
+                i.setLayoutParams(new Gallery.LayoutParams(400, 400));
+            }
             i.setScaleType(ImageView.ScaleType.FIT_XY);
         } catch (Exception e) {
             e.getMessage();
