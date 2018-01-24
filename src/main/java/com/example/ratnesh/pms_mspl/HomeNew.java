@@ -36,6 +36,7 @@ public class HomeNew extends Fragment {
                 startActivity(project_details_intent);
             }
         });
+        project_layout.setVisibility(View.GONE);
 
         progress_layout.setOnClickListener(new View.OnClickListener() {
             @Override

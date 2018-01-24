@@ -1,15 +1,20 @@
 package com.example.ratnesh.pms_mspl;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Gallery;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ratnesh.pms_mspl.Models.ProjectDetailModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,8 +26,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
     private HashMap<String, List<ProjectDetailModel>> _listDataChild;
+    private ArrayList<String> pathList;
+    private LinearLayout linLay;
 
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<ProjectDetailModel>> listChildData) {
@@ -62,13 +68,48 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.status);
         TextView remark = (TextView) convertView
                 .findViewById(R.id.remark);
+        linLay = convertView.findViewById(R.id.linLay);
 
         proj_progress.setText(childText.getProjectCategory());
         date.setText(childText.getProgressDate());
         status.setText(childText.getProgressStatus());
         remark.setText(childText.getProgressRemark());
+        String imgPath = childText.getImagePath();
+
+        if (!imgPath.equals("null") && !imgPath.isEmpty()) {
+            pathList = new ArrayList<>();
+            if (imgPath.contains(",")) {
+                String[] str = imgPath.split(",");
+                for (int i=0; i<str.length; i++) {
+                    pathList.add(str[i]);
+                }
+            } else {
+                pathList.add(imgPath);
+            }
+            SetToGallary(convertView, pathList);
+        } else {
+            linLay.setVisibility(View.GONE);
+        }
 
         return convertView;
+    }
+
+    public void SetToGallary(View convertView, final ArrayList<String> path_List) {
+        Gallery gallery = (Gallery) convertView.findViewById(R.id.gallery);
+        linLay.setVisibility(View.VISIBLE);
+        gallery.setSpacing(10);
+        final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(_context, pathList, "Expandable");
+        gallery.setAdapter(galleryImageAdapter);
+        gallery.setSelection(1);
+
+        gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(_context, ZoomActivity.class);
+                i.putExtra("image", path_List.get(position));
+                _context.startActivity(i);
+            }
+        });
     }
 
     @Override
