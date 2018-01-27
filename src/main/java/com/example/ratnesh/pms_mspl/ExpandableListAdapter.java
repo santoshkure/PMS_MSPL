@@ -1,8 +1,10 @@
 package com.example.ratnesh.pms_mspl;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,12 +97,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     }
 
     public void SetToGallary(View convertView, final ArrayList<String> path_List) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        ((Activity) _context).getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         Gallery gallery = (Gallery) convertView.findViewById(R.id.gallery);
+
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) gallery.getLayoutParams();
+        mlp.setMargins((int) -(metrics.widthPixels/1.5), mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
+
         linLay.setVisibility(View.VISIBLE);
         gallery.setSpacing(10);
         final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(_context, pathList, "Expandable");
         gallery.setAdapter(galleryImageAdapter);
-        gallery.setSelection(1);
 
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

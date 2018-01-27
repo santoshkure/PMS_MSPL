@@ -18,14 +18,14 @@
         <item>No</item>
         <item>Partially</item>
     </string-array>
-    <string name="title_activity_add_location">AddLocation</string>
-    <string name="title_activity_edit_loction_details">EditLoctionDetails</string>
-    <string name="title_activity_progress_status">ProgressStatus</string>
-    <string name="title_activity_add_progress">AddProgress</string>
+    <string name="title_activity_add_location">Add Location</string>
+    <string name="title_activity_edit_loction_details">Edit Loction Details</string>
+    <string name="title_activity_progress_status">Progress Status</string>
+    <string name="title_activity_add_progress">Add Progress</string>
     <string name="title_activity_progress_item_list">Progress List</string>
     <string name="title_activity_add_progress_category">Add Progress of Category</string>
     <string name="title_activity_reports">Reports</string>
-    <string name="title_activity_report_list">ReportList</string>
-    <string name="title_activity_report_details">ReportDetails</string>
-    <string name="title_activity_zoom">ZoomActivity</string>
+    <string name="title_activity_report_list">Report List</string>
+    <string name="title_activity_report_details">Report Details</string>
+    <string name="title_activity_zoom">Zoom Activity</string>
 </resources>
