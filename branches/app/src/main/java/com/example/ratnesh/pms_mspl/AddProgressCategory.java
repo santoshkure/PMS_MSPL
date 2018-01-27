@@ -10,14 +10,17 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,7 +57,9 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -184,6 +189,9 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                     if (progressStatus.equals("Yes")) {
                                         yesRadioButton.setChecked(true);
                                         uploadButton.setVisibility(View.GONE);
+                                        btnselectpic.setVisibility(View.GONE);
+                                        noRadioButton.setEnabled(false);
+                                        partiallyRadioButton.setEnabled(false);
                                     } else if (progressStatus.equals("No")) {
                                         noRadioButton.setChecked(true);
                                     } else {
@@ -201,7 +209,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                         } else {
                                             pathList.add(imagePath);
                                         }
-                                        btnselectpic.setVisibility(View.GONE);
+//                                        btnselectpic.setVisibility(View.GONE);
                                     }
 
                                     if (pathList != null && !pathList.isEmpty()) {
@@ -209,11 +217,6 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                     }
 
                                     uploadButton.setText("Update");
-//                                    if (!imagePath.equals("null")) {
-//                                        imageview.setVisibility(View.VISIBLE);
-//                                        new DownLoadImageTask(imageview).execute(imagePath);
-//                                        btnselectpic.setVisibility(View.GONE);
-//                                    }
                                 }
                                 progressDateEditText.setText(progressDate);
                                 remarkEditText.setText(progressRemark);
@@ -267,9 +270,6 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                 mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
                 startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
 
-//                imageview.setVisibility(View.VISIBLE);
-//                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                startActivityForResult(intent, URLs.REQCODE);
                 break;
             case R.id.submit:
                 try {
@@ -277,25 +277,33 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
 
                     statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
 
-//                Bitmap image = ((BitmapDrawable) imageview.getDrawable()).getBitmap();
                     ArrayList<String> str = new ArrayList<String>();
 
                     JSONArray jsonArray = new JSONArray();
 
                     dialog.show();
                     for (int i = 0; i < pathList.size(); i++) {
-                        File imgFile = new File(pathList.get(i));
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                        myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                        String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-                        jsonArray.put(a);
+                        try {
+                            Bitmap myBitmap;
+                            if (pathList.get(i).contains("http")) {
+                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                StrictMode.setThreadPolicy(policy);
 
+                                URL url = new URL(pathList.get(i));
+                                myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+                            } else {
+                                File imgFile = new File(pathList.get(i));
+                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            }
+                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                            String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                            jsonArray.put(a);
+                        } catch (Exception e) {
+                            e.getMessage();
+                        }
                     }
 
-//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                image.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//                String encodedImage = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
                     jsonObject.put("project_id", projectId);
                     jsonObject.put("location_id", locationId);
                     jsonObject.put("progress_category_id", progress_category_id);
@@ -342,7 +350,14 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             imageview.setImageURI(selectedImageUri);
         }
         if (resultCode == -1 && requestCode == PickImageActivity.PICKER_REQUEST_CODE) {
-            this.pathList = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
+            if (pathList == null) {
+                this.pathList = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
+            } else {
+                ArrayList<String> str = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
+                for (int i = 0; i < str.size(); i++) {
+                    this.pathList.add(str.get(i));
+                }
+            }
             if (this.pathList != null && !this.pathList.isEmpty()) {
                 SetToGallary();
             }
@@ -350,12 +365,17 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
     }
 
     public void SetToGallary() {
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+
         Gallery gallery = (Gallery) findViewById(R.id.gallery);
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) gallery.getLayoutParams();
+        mlp.setMargins((int) -(metrics.widthPixels / 1.7), mlp.topMargin, mlp.rightMargin, mlp.bottomMargin);
+
         gallery.setVisibility(View.VISIBLE);
         gallery.setSpacing(10);
         final GalleryImageAdapter galleryImageAdapter = new GalleryImageAdapter(this, pathList, "ProgressCat");
         gallery.setAdapter(galleryImageAdapter);
-        gallery.setSelection(1);
 
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -367,39 +387,4 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         });
     }
 
-    public static class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownLoadImageTask(ImageView imageView) {
-            this.imageView = imageView;
-        }
-
-        /*
-            doInBackground(Params... params)
-                Override this method to perform a computation on a background thread.
-         */
-        protected Bitmap doInBackground(String... urls) {
-            String urlOfImage = urls[0];
-            Bitmap logo = null;
-            try {
-                InputStream is = new URL(urlOfImage).openStream();
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
-                logo = BitmapFactory.decodeStream(is);
-            } catch (Exception e) { // Catch the download exception
-                e.printStackTrace();
-            }
-            return logo;
-        }
-
-        /*
-            onPostExecute(Result result)
-                Runs on the UI thread after doInBackground(Params...).
-         */
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 }

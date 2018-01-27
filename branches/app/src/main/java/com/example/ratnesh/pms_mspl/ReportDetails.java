@@ -1,24 +1,11 @@
 package com.example.ratnesh.pms_mspl;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,7 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ratnesh.pms_mspl.Models.ProjectDetailModel;
 import com.example.ratnesh.pms_mspl.Models.ReportDetailModel;
-import com.google.gson.Gson;
+import com.example.ratnesh.pms_mspl.Models.ReportDetailsModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,10 +29,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class ReportDetails extends AppCompatActivity {
 

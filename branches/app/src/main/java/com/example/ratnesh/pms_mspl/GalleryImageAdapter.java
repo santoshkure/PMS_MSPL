@@ -49,7 +49,7 @@ public class GalleryImageAdapter extends BaseAdapter {
             if (ImgPaths.get(index).contains("http")) {
                 Picasso.with(mContext)
                         .load(ImgPaths.get(index))
-                        .placeholder(R.mipmap.ic_launcher)
+                        .placeholder(R.drawable.loader)
                         .error(R.mipmap.ic_launcher)
                         .into(i);
             } else {

@@ -30,20 +30,12 @@ public class ZoomActivity extends AppCompatActivity {
 
         String str = getIntent().getStringExtra("image");
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         if (str.contains("http")) {
             imgView.setVisibility(View.VISIBLE);
             imageView.setVisibility(View.GONE);
             Picasso.with(getApplicationContext())
                     .load(str)
-                    .placeholder(R.mipmap.ic_launcher)
+                    .placeholder(R.drawable.loader)
                     .error(R.mipmap.ic_launcher)
                     .into(imgView);
             pAttacher = new PhotoViewAttacher(imgView);
@@ -59,7 +51,6 @@ public class ZoomActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fab = findViewById(R.id.fab);
         imageView = findViewById(R.id.imageView);
         imgView = findViewById(R.id.imgView);
     }

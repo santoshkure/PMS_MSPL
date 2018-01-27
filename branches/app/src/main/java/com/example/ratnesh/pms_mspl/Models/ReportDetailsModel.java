@@ -1,4 +1,4 @@
-package com.example.ratnesh.pms_mspl;
+package com.example.ratnesh.pms_mspl.Models;
 
 /**
  * Created by Ratnesh on 12/01/2018.
