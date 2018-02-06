@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_login">
+    tools:showIn="@layout/activity_login"
+    android:background="@drawable/gardient"
+    android:layout_gravity="center">
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,29 +17,32 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="70dp"
+            android:layout_height="match_parent"
             android:paddingLeft="24dp"
             android:paddingRight="24dp">
 
          <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="72dp"
-                android:layout_marginBottom="24dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_marginBottom="30dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/mspl_logo_white"/>
 
             <!-- Email Label -->
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:textColorHint="@color/colorWhite">
                 <EditText android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:hint="Email" />
+                    android:hint="Email"
+                    android:textColor="@color/colorWhite"/>
             </android.support.design.widget.TextInputLayout>
 
             <!-- Password Label -->
@@ -45,12 +50,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="8dp"
+                android:textColorHint="@color/colorWhite">
                 <EditText android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:hint="Password"/>
+                    android:hint="Password"
+                    android:textColor="@color/colorWhite"/>
             </android.support.design.widget.TextInputLayout>
 
             <Button
@@ -58,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/buttonLogin"
                 android:layout_marginTop="30dp"
-                android:background="@color/colorPrimary"
+                android:background="#2e07a0ff"
                 android:text="Log In"
                 android:textColor="@color/colorWhite"/>
 
