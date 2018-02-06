@@ -1,24 +1,36 @@
 package com.example.ratnesh.pms_mspl;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -64,6 +76,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -83,6 +96,8 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
     private RadioGroup statusRadioGroup;
     private RadioButton statusRadioButton, yesRadioButton, noRadioButton, partiallyRadioButton;
     private ArrayList<String> pathList;
+    private User user;
+    private AlertDialog dialog1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +105,10 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_add_progress_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
+
+        pathList = new ArrayList<>();
 
         Intent getIntent = getIntent();
         progress_category_id = getIntent.getStringExtra("progress_category_id");
@@ -209,13 +228,11 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                         } else {
                                             pathList.add(imagePath);
                                         }
-//                                        btnselectpic.setVisibility(View.GONE);
                                     }
 
                                     if (pathList != null && !pathList.isEmpty()) {
                                         SetToGallary();
                                     }
-
                                     uploadButton.setText("Update");
                                 }
                                 progressDateEditText.setText(progressDate);
@@ -259,26 +276,23 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         requestQueue.add(stringRequest);
     }
 
-
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.button_selectpic:
-                Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
-                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MAX_IMAGE, 60);
-                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
-                startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
+                CreateDialog();
+
+//                Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
+//                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MAX_IMAGE, 60);
+//                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
+//                startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
 
                 break;
             case R.id.submit:
                 try {
-                    Toast.makeText(getApplicationContext(), "fsf", Toast.LENGTH_LONG).show();
-
                     statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
-
                     ArrayList<String> str = new ArrayList<String>();
-
                     JSONArray jsonArray = new JSONArray();
 
                     dialog.show();
@@ -291,6 +305,14 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
 
                                 URL url = new URL(pathList.get(i));
                                 myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+                            } else if (pathList.get(i).contains("CameraDemo")) {
+                                Uri file = Uri.parse(pathList.get(i));
+                                InputStream is = getContentResolver().openInputStream(file);
+                                Bitmap rotatedImg = BitmapFactory.decodeStream(is);
+
+                                Matrix matrix = new Matrix();
+                                matrix.postRotate(90);
+                                myBitmap = Bitmap.createBitmap(rotatedImg, 0, 0, rotatedImg.getWidth(), rotatedImg.getHeight(), matrix, true);
                             } else {
                                 File imgFile = new File(pathList.get(i));
                                 myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
@@ -310,7 +332,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                     jsonObject.put("progress_status", statusRadioButton.getText());
                     jsonObject.put("progress_date", progressDateEditText.getText().toString());
                     jsonObject.put("remark", remarkEditText.getText().toString());
-                    //jsonObject.put("image_name", etxtUpload.getText().toString().trim());
+                    jsonObject.put("registered_by", user.getUserId());
                     jsonObject.put("image", jsonArray);
                     jsonObject.put("request_type", uploadButton.getText().toString());
                 } catch (JSONException e) {
@@ -335,7 +357,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                         dialog.dismiss();
                     }
                 });
-                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(5000,
+                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
                         DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                         DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 Volley.newRequestQueue(this).add(jsonObjectRequest);
@@ -343,12 +365,95 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         }
     }
 
+    private void CreateDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.attachment_options, null);
+        final TextView Gallery = alertLayout.findViewById(R.id.gallery_attach);
+        final TextView Capture = alertLayout.findViewById(R.id.capture);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(AddProgressCategory.this);
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setCancelable(false);
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        dialog1 = alert.create();
+        dialog1.show();
+        Gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                OpenGallery();
+                dialog1.dismiss();
+            }
+        });
+
+        Capture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(AddProgressCategory.this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+                } else {
+                    OpenCamera();
+                }
+
+                dialog1.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                OpenCamera();
+            }
+        }
+    }
+
+    private void OpenGallery() {
+                Intent mIntent = new Intent(getApplicationContext(), PickImageActivity.class);
+                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MAX_IMAGE, 60);
+                mIntent.putExtra(PickImageActivity.KEY_LIMIT_MIN_IMAGE, 1);
+                startActivityForResult(mIntent, PickImageActivity.PICKER_REQUEST_CODE);
+    }
+
+    Uri file;
+    private void OpenCamera() {
+        try {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            file = FileProvider.getUriForFile(AddProgressCategory.this,
+                    BuildConfig.APPLICATION_ID + ".provider", getOutputMediaFile());
+
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, file);
+            startActivityForResult(intent, 100);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    private static File getOutputMediaFile(){
+        File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "CameraDemo");
+
+        if (!mediaStorageDir.exists()){
+            if (!mediaStorageDir.mkdirs()){
+                return null;
+            }
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        return new File(mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg");
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == URLs.REQCODE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
-            imageview.setImageURI(selectedImageUri);
-        }
         if (resultCode == -1 && requestCode == PickImageActivity.PICKER_REQUEST_CODE) {
             if (pathList == null) {
                 this.pathList = data.getExtras().getStringArrayList(PickImageActivity.KEY_DATA_RESULT);
@@ -358,9 +463,16 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                     this.pathList.add(str.get(i));
                 }
             }
-            if (this.pathList != null && !this.pathList.isEmpty()) {
-                SetToGallary();
+        } else if (resultCode == -1 && requestCode == 100) {
+            try {
+                this.pathList.add(file.toString());
+            } catch (Exception e) {
+                e.getMessage();
             }
+        }
+
+        if (this.pathList != null && !this.pathList.isEmpty()) {
+            SetToGallary();
         }
     }
 

@@ -70,12 +70,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.status);
         TextView remark = (TextView) convertView
                 .findViewById(R.id.remark);
+        TextView register_by = (TextView) convertView
+                .findViewById(R.id.register_by);
         linLay = convertView.findViewById(R.id.linLay);
 
         proj_progress.setText(childText.getProjectCategory());
         date.setText(childText.getProgressDate());
         status.setText(childText.getProgressStatus());
         remark.setText(childText.getProgressRemark());
+        if (childText.getRegister_by() != null) {
+            register_by.setText(childText.getRegister_by());
+        }
         String imgPath = childText.getImagePath();
 
         if (!imgPath.equals("null") && !imgPath.isEmpty()) {

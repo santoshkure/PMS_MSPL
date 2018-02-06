@@ -13,7 +13,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-
 public class HomeNew extends Fragment {
     View rootView;
 
@@ -45,7 +44,6 @@ public class HomeNew extends Fragment {
                 startActivity(progress_status_intent);
             }
         });
-
 
         report_layout.setOnClickListener(new View.OnClickListener() {
             @Override

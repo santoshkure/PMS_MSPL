@@ -32,12 +32,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProgressStatus extends AppCompatActivity {
-
     private Spinner projectNameSpinner, locationNameSpinner, progressCategorySpinner;
     private String projectName, locationName, progressCategoryName, progressCategoryId, projectId, locationId;
-    Button searchButton;
-    private String[] projectIdArray, projectNameArray, locationIdArray, locationNameArray, progressCategoryIdArray ,progressCategoryNameArray;
+    private String[] projectIdArray, projectNameArray, locationIdArray, locationNameArray, progressCategoryIdArray, progressCategoryNameArray;
     public ArrayAdapter<String> SpinerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,36 +44,25 @@ public class ProgressStatus extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        projectNameSpinner = (Spinner)findViewById(R.id.project_name);
-        locationNameSpinner = (Spinner)findViewById(R.id.location_name);
-        progressCategorySpinner = (Spinner)findViewById(R.id.progress_category);
+        projectNameSpinner = (Spinner) findViewById(R.id.project_name);
+        locationNameSpinner = (Spinner) findViewById(R.id.location_name);
+        progressCategorySpinner = (Spinner) findViewById(R.id.progress_category);
 
         setProjectSpinner();
 
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-                if(projectNameSpinner.getSelectedItem() == "Select Project")
-                {
+                if (projectNameSpinner.getSelectedItem() == "Select Project") {
                     Toast.makeText(getApplicationContext(), "Please Select Project", Toast.LENGTH_LONG).show();
-
-                }
-                else if(locationNameSpinner.getSelectedItem() == "Select Location")
-                {
+                } else if (locationNameSpinner.getSelectedItem() == "Select Location") {
                     Toast.makeText(getApplicationContext(), "Please Select Location", Toast.LENGTH_LONG).show();
-
-                }
-                else if(progressCategorySpinner.getSelectedItem() == "Select Progress Category")
-                {
+                } else if (progressCategorySpinner.getSelectedItem() == "Select Progress Category") {
                     Toast.makeText(getApplicationContext(), "Please Select Location", Toast.LENGTH_LONG).show();
-
-                }
-                else {
+                } else {
                     int pos = progressCategorySpinner.getSelectedItemPosition();
-                    progressCategoryId = progressCategoryIdArray[pos-1];
-                    progressCategoryName = progressCategoryNameArray[pos-1];
+                    progressCategoryId = progressCategoryIdArray[pos - 1];
+                    progressCategoryName = progressCategoryNameArray[pos - 1];
 
                     Intent intent = new Intent(ProgressStatus.this, AddProgressCategory.class);
                     intent.putExtra("progress_category_id", progressCategoryId);
@@ -99,8 +87,8 @@ public class ProgressStatus extends AppCompatActivity {
                     default:
                         //projectId = projectIdArray[position-1];
                         int pos = projectNameSpinner.getSelectedItemPosition();
-                        projectId = projectIdArray[pos-1];
-                        projectName = projectNameArray[pos-1];
+                        projectId = projectIdArray[pos - 1];
+                        projectName = projectNameArray[pos - 1];
                         setLocationSpinner();
                         break;
                 }
@@ -108,7 +96,6 @@ public class ProgressStatus extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
                 // sometimes you need nothing here
             }
         });
@@ -124,8 +111,8 @@ public class ProgressStatus extends AppCompatActivity {
                         //locationId = locationIdArray[position-1];
 
                         int pos = locationNameSpinner.getSelectedItemPosition();
-                        locationId = locationIdArray[pos-1];
-                        locationName = locationNameArray[pos-1];
+                        locationId = locationIdArray[pos - 1];
+                        locationName = locationNameArray[pos - 1];
                         setProgressCategorySpinner();
                         break;
                 }
@@ -133,7 +120,6 @@ public class ProgressStatus extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
                 // sometimes you need nothing here
             }
         });
@@ -146,8 +132,7 @@ public class ProgressStatus extends AppCompatActivity {
         finish();
     }
 
-    private void setProjectSpinner(){
-
+    private void setProjectSpinner() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SETSPINNER,
                 new Response.Listener<String>() {
                     @Override
@@ -171,12 +156,9 @@ public class ProgressStatus extends AppCompatActivity {
                             SpinerAdapter.add("Select Project");
                             SpinerAdapter.addAll(projectNameArray);
                             projectNameSpinner.setAdapter(SpinerAdapter);
-
-                        }
-                        catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("dsadd", String.valueOf(e));
-
                         }
                     }
                 },
@@ -196,23 +178,20 @@ public class ProgressStatus extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "JSONArray Problem", Toast.LENGTH_LONG).show();
                         }
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("msg", "ff");
                 return params;
             }
-
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
-
-    private void setLocationSpinner(){
-
+    private void setLocationSpinner() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_SETLOCATIONSPINNER,
                 new Response.Listener<String>() {
                     @Override
@@ -236,12 +215,9 @@ public class ProgressStatus extends AppCompatActivity {
                             SpinerAdapter.add("Select Location");
                             SpinerAdapter.addAll(locationNameArray);
                             locationNameSpinner.setAdapter(SpinerAdapter);
-
-                        }
-                        catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("dsadd", String.valueOf(e));
-
                         }
                     }
                 },
@@ -261,22 +237,20 @@ public class ProgressStatus extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "JSONArray Problem", Toast.LENGTH_LONG).show();
                         }
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("project_id", projectId);
                 return params;
             }
-
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }
 
-    private void setProgressCategorySpinner(){
-
+    private void setProgressCategorySpinner() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_PROGRESSCATEGORY,
                 new Response.Listener<String>() {
                     @Override
@@ -294,18 +268,14 @@ public class ProgressStatus extends AppCompatActivity {
                                 JSONObject actor = progressCategoryList.getJSONObject(i);
                                 progressCategoryIdArray[i] = actor.getString("progress_category_id");
                                 progressCategoryNameArray[i] = actor.getString("progress_category");
-
                             }
                             SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
                             SpinerAdapter.add("Select Progress Category");
                             SpinerAdapter.addAll(progressCategoryNameArray);
                             progressCategorySpinner.setAdapter(SpinerAdapter);
-
-                        }
-                        catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                             Log.d("dsadd", String.valueOf(e));
-
                         }
                     }
                 },
@@ -325,15 +295,14 @@ public class ProgressStatus extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "JSONArray Problem", Toast.LENGTH_LONG).show();
                         }
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
                 params.put("project_id", projectId);
                 params.put("location_id", locationId);
                 return params;
             }
-
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);

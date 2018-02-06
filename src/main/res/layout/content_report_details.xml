@@ -14,6 +14,31 @@
         android:orientation="vertical"
         android:background="#f4f4f4" >
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Project Progress Report"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/margin_small"
+            android:padding="@dimen/margin_medium"
+            android:background="@color/colorWhite"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_large"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:stretchColumns="1"
+                android:background="#ffffff"
+                android:layout_centerInParent="true"
+                android:id="@+id/display_table_layout"
+                android:layout_marginBottom="@dimen/margin_small">
+            </TableLayout>
+        </HorizontalScrollView>
+
         <ExpandableListView
             android:id="@+id/lvExp"
             android:layout_height="match_parent"

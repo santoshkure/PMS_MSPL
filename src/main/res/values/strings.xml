@@ -28,4 +28,5 @@
     <string name="title_activity_report_list">Report List</string>
     <string name="title_activity_report_details">Report Details</string>
     <string name="title_activity_zoom">Zoom Activity</string>
+    <string name="title_activity_progress_details">ProgressDetails</string>
 </resources>
