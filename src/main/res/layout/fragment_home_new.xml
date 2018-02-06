@@ -67,7 +67,7 @@
                 android:paddingRight="@dimen/padding_large"
                 android:paddingTop="@dimen/padding_normal"
                 android:paddingBottom="@dimen/padding_normal"
-                android:background="@drawable/gardient"
+                android:background="@drawable/gardient_2"
                 android:id="@+id/progress_item">
 
                 <LinearLayout
