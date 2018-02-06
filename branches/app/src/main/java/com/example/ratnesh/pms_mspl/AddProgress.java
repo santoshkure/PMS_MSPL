@@ -99,8 +99,6 @@ public class AddProgress extends AppCompatActivity implements View.OnClickListen
         jsonObject = new JSONObject();
     }
 
-
-
     private void getProgressCateg(){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_PROGRESSCATEGORY,

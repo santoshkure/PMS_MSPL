@@ -36,12 +36,13 @@ import java.util.Map;
 
 public class ReportList extends AppCompatActivity {
 
-    private TextView projectNameTextView, complectedTextView, pendingTextView, locationNameTextView, categoryTextView;
+    private TextView projectNameTextView, complectedTextView, pendingTextView, locationNameTextView, categoryTextView, TempTextView;
     private String projectId, projectName;
     TableLayout displayTableLayout;
-    private TableRow row1, row2;
+    private TableRow row1, row2, row3;
     int indexRow;
     ArrayList<String> complectedStatusArray, pendingStatusArray;
+    int TotalLoc=0, TotalCompleted=0, TotalPending=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +119,6 @@ public class ReportList extends AppCompatActivity {
                                             completed = completed + 1;
                                         } else {
                                             partially = partially + 1;
-
                                         }
                                     }
 
@@ -167,7 +167,6 @@ public class ReportList extends AppCompatActivity {
     }
 
     private void createRowData(final ArrayList<ReportModel> reports) throws JSONException {
-
         row1 = new TableRow(ReportList.this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row1.setBackground(getResources().getDrawable(R.drawable.border));
@@ -181,6 +180,7 @@ public class ReportList extends AppCompatActivity {
 
         categoryTextView = new TextView(ReportList.this);
         categoryTextView.setText("Total Locations");
+        categoryTextView.setGravity(Gravity.CENTER);
         categoryTextView.setPadding(10, 10, 10, 10);
         categoryTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(categoryTextView);
@@ -220,6 +220,7 @@ public class ReportList extends AppCompatActivity {
 
             locationNameTextView = new TextView(ReportList.this);
             locationNameTextView.setText(category);
+            locationNameTextView.setGravity(Gravity.CENTER);
             locationNameTextView.setPadding(10, 10, 10, 10);
             row2.addView(locationNameTextView);
 
@@ -273,9 +274,49 @@ public class ReportList extends AppCompatActivity {
             }
             row2.addView(pendingTextView);
 
+            TotalLoc = TotalLoc + Integer.parseInt(locationCount);
+            TotalCompleted = TotalCompleted + Integer.parseInt(complectedStatusArray.get(i));
+            TotalPending = TotalPending + Integer.parseInt(pendingStatusArray.get(i));
+
             indexRow = i;
             displayTableLayout.addView(row2, ++indexRow);
         }
+
+        row3 = new TableRow(ReportList.this);
+        row3.setBackground(getResources().getDrawable(R.drawable.border));
+        row3.setLayoutParams(lp);
+
+        TempTextView = new TextView(ReportList.this);
+        TempTextView.setText("Total");
+        TempTextView.setGravity(Gravity.CENTER);
+        TempTextView.setPadding(10, 10, 10, 10);
+        TempTextView.setTypeface(null, Typeface.BOLD);
+        row3.addView(TempTextView);
+
+        TempTextView = new TextView(ReportList.this);
+        TempTextView.setText(String.valueOf(TotalLoc));
+        TempTextView.setGravity(Gravity.CENTER);
+        TempTextView.setPadding(10, 10, 10, 10);
+        TempTextView.setTypeface(null, Typeface.BOLD);
+        row3.addView(TempTextView);
+
+        TempTextView = new TextView(ReportList.this);
+        TempTextView.setText(String.valueOf(TotalCompleted));
+        TempTextView.setGravity(Gravity.CENTER);
+        TempTextView.setPadding(10, 10, 10, 10);
+        TempTextView.setTypeface(null, Typeface.BOLD);
+        row3.addView(TempTextView);
+
+        TempTextView = new TextView(ReportList.this);
+        TempTextView.setText(String.valueOf(TotalPending));
+        TempTextView.setGravity(Gravity.CENTER);
+        TempTextView.setPadding(10, 10, 10, 10);
+        TempTextView.setTypeface(null, Typeface.BOLD);
+        row3.addView(TempTextView);
+
+        displayTableLayout.addView(row3, ++indexRow);
+
+
     }
 
 }

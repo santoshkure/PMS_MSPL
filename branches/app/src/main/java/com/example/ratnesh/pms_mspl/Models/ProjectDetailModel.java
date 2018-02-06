@@ -10,6 +10,8 @@ public class ProjectDetailModel {
     String progressRemark;
     String progressStatus;
     String imagePath;
+    String locationName;
+    String register_by;
 
     public String getProjectCategory() {
         return projectCategory;
@@ -49,5 +51,21 @@ public class ProjectDetailModel {
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
+
+    public String getRegister_by() {
+        return register_by;
+    }
+
+    public void setRegister_by(String register_by) {
+        this.register_by = register_by;
     }
 }

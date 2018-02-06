@@ -51,7 +51,6 @@ public class Login extends AppCompatActivity {
         });
     }
 
-
     private void userLogin() {
         //first getting the values
         final String username = editTextUsername.getText().toString();
@@ -98,8 +97,6 @@ public class Login extends AppCompatActivity {
                             } else {
                                 Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                             }
-
-
                         }
                         catch (JSONException e) {
                             e.printStackTrace();
