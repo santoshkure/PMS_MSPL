@@ -36,13 +36,15 @@ public class ProgressStatus extends AppCompatActivity {
     private String projectName, locationName, progressCategoryName, progressCategoryId, projectId, locationId;
     private String[] projectIdArray, projectNameArray, locationIdArray, locationNameArray, progressCategoryIdArray, progressCategoryNameArray;
     public ArrayAdapter<String> SpinerAdapter;
-
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_status);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        user = SharedPrefManager.getInstance(this).getUser();
 
         projectNameSpinner = (Spinner) findViewById(R.id.project_name);
         locationNameSpinner = (Spinner) findViewById(R.id.location_name);
@@ -266,8 +268,8 @@ public class ProgressStatus extends AppCompatActivity {
 
                             for (int i = 0; i < progressCategoryList.length(); i++) {
                                 JSONObject actor = progressCategoryList.getJSONObject(i);
-                                progressCategoryIdArray[i] = actor.getString("progress_category_id");
-                                progressCategoryNameArray[i] = actor.getString("progress_category");
+                                progressCategoryIdArray[i] = actor.getString("c_progress_id");
+                                progressCategoryNameArray[i] = actor.getString("c_progress_name");
                             }
                             SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
                             SpinerAdapter.add("Select Progress Category");
@@ -299,8 +301,8 @@ public class ProgressStatus extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("party_id", user.getPartyId());
                 params.put("project_id", projectId);
-                params.put("location_id", locationId);
                 return params;
             }
         };
