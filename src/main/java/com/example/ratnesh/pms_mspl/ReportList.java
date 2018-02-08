@@ -50,6 +50,9 @@ public class ReportList extends AppCompatActivity {
         setContentView(R.layout.activity_report_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent getProjectId = getIntent();
         projectId = getProjectId.getStringExtra("project_id");
@@ -60,6 +63,12 @@ public class ReportList extends AppCompatActivity {
 
         displayTableLayout = (TableLayout) findViewById(R.id.display_table_layout);
         viewReport();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onBackPressed() {

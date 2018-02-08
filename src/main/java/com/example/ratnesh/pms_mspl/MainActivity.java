@@ -1,5 +1,7 @@
 package com.example.ratnesh.pms_mspl;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity
     private User user;
     private String userName, userId;
     private View navHeaderView;
+    public final static String TAG_FRAGMENT = "TAG_FRAGMENT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,15 +54,7 @@ public class MainActivity extends AppCompatActivity
         userNameTextView.setText("Welcome, " +  user.getUserLoginId());
         userIdTextView.setText(user.getPartyId());
 
-        Fragment fragmentHome = new HomeNew();
-        setFragment(fragmentHome);
-    }
-
-    public void setFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.content_frame, fragment)
-                .commit();
+        displaySelectedScreen(R.id.nav_home, true);
     }
 
     @Override
@@ -67,58 +63,77 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            final Fragment fragment = (Fragment) getSupportFragmentManager().findFragmentByTag(TAG_FRAGMENT);
+            if (fragment != null) { // and then you define a method allowBackPressed with the logic to allow back pressed or not
+                super.onBackPressed();
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    finishAffinity();
+                } else {
+                    finish();
+                }
+                System.exit(0);
+            }
         }
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            Fragment fragmentHome = new HomeNew();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragmentHome);
-            ft.commit();
-            restoreActionBar("Home");
-        } else if (id == R.id.nav_logout) {
-            SharedPrefManager.getInstance(getApplicationContext()).logout();
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        displaySelectedScreen(item.getItemId(), false);
         return true;
     }
 
-    public void restoreActionBar (String mTitle) {
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode( ActionBar.NAVIGATION_MODE_STANDARD );
-        actionBar.setDisplayShowTitleEnabled( true );
-        actionBar.setTitle( mTitle );
+    private void displaySelectedScreen(int itemId, boolean first) {
+        //creating fragment object
+        Fragment fragment = null;
+
+        //initializing the fragment object which is selected
+        switch (itemId) {
+            case R.id.nav_home:
+                fragment = new HomeNew();
+                break;
+            case R.id.nav_contact_us:
+                fragment = new ContactUs();
+                break;
+            case R.id.nav_logout:
+                SharedPrefManager.getInstance(getApplicationContext()).logout();
+                break;
+        }
+
+        if (fragment != null) {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+            if (currentFragment == null || currentFragment.getClass() != fragment.getClass()) {
+                OpenFragment(fragment, first);
+            } else {
+                CloseDraver();
+            }
+        } else {
+            CloseDraver();
+        }
     }
+
+    private void OpenFragment(Fragment fragment, boolean first) {
+        if (fragment != null) {
+            //replacing the fragment
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            if (first) {
+                ft.add(R.id.content_frame, fragment);
+            } else {
+                ft.replace(R.id.content_frame, fragment, TAG_FRAGMENT);
+            }
+            ft.addToBackStack(null);
+            ft.commit();
+        }
+        CloseDraver();
+    }
+
+    private void CloseDraver() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+    }
+
 }
 

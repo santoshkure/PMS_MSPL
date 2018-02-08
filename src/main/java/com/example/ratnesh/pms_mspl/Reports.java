@@ -45,10 +45,19 @@ public class Reports extends AppCompatActivity {
         setContentView(R.layout.activity_reports);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         displayTableLayout = (TableLayout)findViewById(R.id.display_table_layout);
 
         viewProjects();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onBackPressed() {

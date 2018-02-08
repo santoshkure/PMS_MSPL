@@ -59,6 +59,9 @@ public class ReportDetails extends AppCompatActivity {
         setContentView(R.layout.activity_report_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         projectId = intent.getStringExtra("project_id");
@@ -70,8 +73,13 @@ public class ReportDetails extends AppCompatActivity {
         viewReport();
     }
 
-    JSONArray reoprtDetailsJSONArray;
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 
+    JSONArray reoprtDetailsJSONArray;
     private void viewReport() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REPORTDETAILS,
                 new Response.Listener<String>() {
@@ -180,7 +188,7 @@ public class ReportDetails extends AppCompatActivity {
         row1.setLayoutParams(lp);
 
         TempTextView = new TextView(ReportDetails.this);
-        TempTextView.setText("Project Progress");
+        TempTextView.setText("Progress Categories");
         TempTextView.setPadding(10, 10, 10, 10);
         TempTextView.setTypeface(null, Typeface.BOLD);
         row1.addView(TempTextView);

@@ -23,7 +23,7 @@
             android:padding="@dimen/margin_medium"
             android:background="@color/colorWhite"
             android:textAlignment="center"
-            android:textSize="@dimen/font_large"/>
+            android:textSize="16dp"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"
