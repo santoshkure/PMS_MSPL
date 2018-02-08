@@ -24,9 +24,9 @@
     <string name="title_activity_add_progress">Add Progress</string>
     <string name="title_activity_progress_item_list">Progress List</string>
     <string name="title_activity_add_progress_category">Add Progress of Category</string>
-    <string name="title_activity_reports">Reports</string>
-    <string name="title_activity_report_list">Report List</string>
+    <string name="title_activity_reports">Project List</string>
+    <string name="title_activity_report_list">Report</string>
     <string name="title_activity_report_details">Report Details</string>
     <string name="title_activity_zoom">Zoom Activity</string>
-    <string name="title_activity_progress_details">ProgressDetails</string>
+    <string name="title_activity_progress_details">Progress Details</string>
 </resources>

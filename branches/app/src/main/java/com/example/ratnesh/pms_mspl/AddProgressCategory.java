@@ -21,16 +21,19 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -87,6 +90,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
     private TextView messageText, projectNameTextView, locationNameTextView, categoryNameTextView;
     private Button uploadButton, btnselectpic;
     private EditText etxtUpload, progressDateEditText, remarkEditText;
+    private TextInputLayout progressDateTextInput, remarkTextInput, statusInput;
     private ImageView imageview;
     private ProgressDialog dialog = null;
     private JSONObject jsonObject;
@@ -105,6 +109,9 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         setContentView(R.layout.activity_add_progress_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         user = SharedPrefManager.getInstance(getApplicationContext()).getUser();
 
@@ -131,7 +138,10 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         partiallyRadioButton = (RadioButton) findViewById(R.id.partially_radio_button);
 
         progressDateEditText = (EditText) findViewById(R.id.progress_date);
+        progressDateTextInput = findViewById(R.id.progress_date_input);
         remarkEditText = (EditText) findViewById(R.id.remark);
+        remarkTextInput = findViewById(R.id.remark_input);
+        statusInput = findViewById(R.id.status_input);
         uploadButton = (Button) findViewById(R.id.submit);
         btnselectpic = (Button) findViewById(R.id.button_selectpic);
         messageText = (TextView) findViewById(R.id.messageText);
@@ -178,6 +188,12 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
         setProgressCategoryDetails();
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     public void onBackPressed() {
         Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
         startActivity(intent);
@@ -213,7 +229,7 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                         partiallyRadioButton.setEnabled(false);
                                     } else if (progressStatus.equals("No")) {
                                         noRadioButton.setChecked(true);
-                                    } else {
+                                    } else if (progressStatus.equals("partially")) {
                                         partiallyRadioButton.setChecked(true);
                                     }
                                     progressRemark = actor.getString("progress_remark");
@@ -237,7 +253,6 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                                 }
                                 progressDateEditText.setText(progressDate);
                                 remarkEditText.setText(progressRemark);
-
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -290,79 +305,117 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
 
                 break;
             case R.id.submit:
-                try {
-                    statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
-                    ArrayList<String> str = new ArrayList<String>();
-                    JSONArray jsonArray = new JSONArray();
-
-                    dialog.show();
-                    for (int i = 0; i < pathList.size(); i++) {
-                        try {
-                            Bitmap myBitmap;
-                            if (pathList.get(i).contains("http")) {
-                                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-                                StrictMode.setThreadPolicy(policy);
-
-                                URL url = new URL(pathList.get(i));
-                                myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
-                            } else if (pathList.get(i).contains("CameraDemo")) {
-                                Uri file = Uri.parse(pathList.get(i));
-                                InputStream is = getContentResolver().openInputStream(file);
-                                Bitmap rotatedImg = BitmapFactory.decodeStream(is);
-
-                                Matrix matrix = new Matrix();
-                                matrix.postRotate(90);
-                                myBitmap = Bitmap.createBitmap(rotatedImg, 0, 0, rotatedImg.getWidth(), rotatedImg.getHeight(), matrix, true);
-                            } else {
-                                File imgFile = new File(pathList.get(i));
-                                myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                            }
-                            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                            myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-                            String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-                            jsonArray.put(a);
-                        } catch (Exception e) {
-                            e.getMessage();
-                        }
-                    }
-
-                    jsonObject.put("project_id", projectId);
-                    jsonObject.put("location_id", locationId);
-                    jsonObject.put("progress_category_id", progress_category_id);
-                    jsonObject.put("progress_status", statusRadioButton.getText());
-                    jsonObject.put("progress_date", progressDateEditText.getText().toString());
-                    jsonObject.put("remark", remarkEditText.getText().toString());
-                    jsonObject.put("registered_by", user.getUserId());
-                    jsonObject.put("image", jsonArray);
-                    jsonObject.put("request_type", uploadButton.getText().toString());
-                } catch (JSONException e) {
-                    Log.e("JSONObject Here", e.toString());
+                statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
+                if (Validate()) {
+//                    try {
+//                        ArrayList<String> str = new ArrayList<String>();
+//                        JSONArray jsonArray = new JSONArray();
+//
+//                        dialog.show();
+//                        for (int i = 0; i < pathList.size(); i++) {
+//                            try {
+//                                Bitmap myBitmap;
+//                                if (pathList.get(i).contains("http")) {
+//                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//                                    StrictMode.setThreadPolicy(policy);
+//
+//                                    URL url = new URL(pathList.get(i));
+//                                    myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+//                                } else if (pathList.get(i).contains("CameraDemo")) {
+//                                    Uri file = Uri.parse(pathList.get(i));
+//                                    InputStream is = getContentResolver().openInputStream(file);
+//                                    Bitmap rotatedImg = BitmapFactory.decodeStream(is);
+//
+//                                    Matrix matrix = new Matrix();
+//                                    matrix.postRotate(90);
+//                                    myBitmap = Bitmap.createBitmap(rotatedImg, 0, 0, rotatedImg.getWidth(), rotatedImg.getHeight(), matrix, true);
+//                                } else {
+//                                    File imgFile = new File(pathList.get(i));
+//                                    myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+//                                }
+//                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//                                myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+//                                String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+//                                jsonArray.put(a);
+//                            } catch (Exception e) {
+//                                e.getMessage();
+//                            }
+//                        }
+//
+//                        jsonObject.put("project_id", projectId);
+//                        jsonObject.put("location_id", locationId);
+//                        jsonObject.put("progress_category_id", progress_category_id);
+//                        jsonObject.put("progress_status", statusRadioButton.getText());
+//                        jsonObject.put("progress_date", progressDateEditText.getText().toString());
+//                        jsonObject.put("remark", remarkEditText.getText().toString());
+//                        jsonObject.put("registered_by", user.getUserId());
+//                        jsonObject.put("image", jsonArray);
+//                        jsonObject.put("request_type", uploadButton.getText().toString());
+//                    } catch (JSONException e) {
+//                        Log.e("JSONObject Here", e.toString());
+//                    }
+//                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URLs.URL_INSERTPROGRESSCATEGORY, jsonObject,
+//                            new Response.Listener<JSONObject>() {
+//                                @Override
+//                                public void onResponse(JSONObject jsonObject) {
+//                                    Log.e("Message from server", jsonObject.toString());
+//                                    dialog.dismiss();
+//                                    messageText.setText("Image Uploaded Successfully");
+//                                    Toast.makeText(getApplication(), "Saved Successfully", Toast.LENGTH_SHORT).show();
+//                                    Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
+//                                    startActivity(intent);
+//                                    finish();
+//                                }
+//                            }, new Response.ErrorListener() {
+//                        @Override
+//                        public void onErrorResponse(VolleyError volleyError) {
+//                            Log.e("Message from server", volleyError.toString());
+//                            dialog.dismiss();
+//                        }
+//                    });
+//                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+//                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+//                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//                    Volley.newRequestQueue(this).add(jsonObjectRequest);
                 }
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URLs.URL_INSERTPROGRESSCATEGORY, jsonObject,
-                        new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject jsonObject) {
-                                Log.e("Message from server", jsonObject.toString());
-                                dialog.dismiss();
-                                messageText.setText("Image Uploaded Successfully");
-                                Toast.makeText(getApplication(), "Saved Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
-                                startActivity(intent);
-                                finish();
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        Log.e("Message from server", volleyError.toString());
-                        dialog.dismiss();
-                    }
-                });
-                jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
-                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-                Volley.newRequestQueue(this).add(jsonObjectRequest);
                 break;
         }
+    }
+
+    private boolean Validate() {
+        if(!TextUtils.isEmpty(progressDateTextInput.getError())) {
+            progressDateTextInput.setErrorEnabled(false);
+        }
+        if(!TextUtils.isEmpty(statusInput.getError())) {
+            statusInput.setErrorEnabled(false);
+        }
+        if(!TextUtils.isEmpty(remarkTextInput.getError())) {
+            remarkTextInput.setErrorEnabled(false);
+        }
+
+        boolean reply = true;
+
+        //validating inputs
+        if (TextUtils.isEmpty(progressDateEditText.getText().toString()) ||
+                progressDateEditText.getText().toString().equals("null")) {
+            progressDateTextInput.setError("Please select Date");
+            progressDateTextInput.requestFocus();
+            reply = false;
+        } else if (statusRadioButton == null) {
+            statusInput.setError("Please select status");
+            statusInput.requestFocus();
+            reply = false;
+        } else if (TextUtils.isEmpty(remarkEditText.getText().toString()) ||
+                remarkEditText.getText().toString().equals("null")) {
+            remarkTextInput.setError("Please enter remark");
+            remarkTextInput.requestFocus();
+            reply = false;
+        } else if (pathList.size() == 0) {
+            Toast.makeText(this, "Atleast one image is require", Toast.LENGTH_SHORT).show();
+            reply = false;
+        }
+
+        return reply;
     }
 
     private void CreateDialog() {

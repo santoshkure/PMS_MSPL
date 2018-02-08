@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,12 +38,16 @@ public class ProgressStatus extends AppCompatActivity {
     private String[] projectIdArray, projectNameArray, locationIdArray, locationNameArray, progressCategoryIdArray, progressCategoryNameArray;
     public ArrayAdapter<String> SpinerAdapter;
     private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_progress_status);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         user = SharedPrefManager.getInstance(this).getUser();
 
@@ -59,6 +64,8 @@ public class ProgressStatus extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please Select Project", Toast.LENGTH_LONG).show();
                 } else if (locationNameSpinner.getSelectedItem() == "Select Location") {
                     Toast.makeText(getApplicationContext(), "Please Select Location", Toast.LENGTH_LONG).show();
+                } else if (progressCategoryNameArray == null) {
+                    Toast.makeText(getApplicationContext(), "You have not assigned any task to do on this location", Toast.LENGTH_LONG).show();
                 } else if (progressCategorySpinner.getSelectedItem() == "Select Progress Category") {
                     Toast.makeText(getApplicationContext(), "Please Select Location", Toast.LENGTH_LONG).show();
                 } else {
@@ -111,7 +118,6 @@ public class ProgressStatus extends AppCompatActivity {
                         break;
                     default:
                         //locationId = locationIdArray[position-1];
-
                         int pos = locationNameSpinner.getSelectedItemPosition();
                         locationId = locationIdArray[pos - 1];
                         locationName = locationNameArray[pos - 1];
@@ -125,7 +131,12 @@ public class ProgressStatus extends AppCompatActivity {
                 // sometimes you need nothing here
             }
         });
+    }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void onBackPressed() {
@@ -211,7 +222,6 @@ public class ProgressStatus extends AppCompatActivity {
                                 JSONObject actor = locationList.getJSONObject(i);
                                 locationIdArray[i] = actor.getString("location_id");
                                 locationNameArray[i] = actor.getString("location_name");
-
                             }
                             SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
                             SpinerAdapter.add("Select Location");
@@ -257,7 +267,6 @@ public class ProgressStatus extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
                         try {
                             final JSONObject obj = new JSONObject(response);
 
@@ -276,6 +285,7 @@ public class ProgressStatus extends AppCompatActivity {
                             SpinerAdapter.addAll(progressCategoryNameArray);
                             progressCategorySpinner.setAdapter(SpinerAdapter);
                         } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), "You have not assigned any task to do on this location", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             Log.d("dsadd", String.valueOf(e));
                         }
