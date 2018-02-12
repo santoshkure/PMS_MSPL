@@ -307,76 +307,76 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
             case R.id.submit:
                 statusRadioButton = (RadioButton) findViewById(statusRadioGroup.getCheckedRadioButtonId());
                 if (Validate()) {
-//                    try {
-//                        ArrayList<String> str = new ArrayList<String>();
-//                        JSONArray jsonArray = new JSONArray();
-//
-//                        dialog.show();
-//                        for (int i = 0; i < pathList.size(); i++) {
-//                            try {
-//                                Bitmap myBitmap;
-//                                if (pathList.get(i).contains("http")) {
-//                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-//                                    StrictMode.setThreadPolicy(policy);
-//
-//                                    URL url = new URL(pathList.get(i));
-//                                    myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
-//                                } else if (pathList.get(i).contains("CameraDemo")) {
-//                                    Uri file = Uri.parse(pathList.get(i));
-//                                    InputStream is = getContentResolver().openInputStream(file);
-//                                    Bitmap rotatedImg = BitmapFactory.decodeStream(is);
-//
-//                                    Matrix matrix = new Matrix();
-//                                    matrix.postRotate(90);
-//                                    myBitmap = Bitmap.createBitmap(rotatedImg, 0, 0, rotatedImg.getWidth(), rotatedImg.getHeight(), matrix, true);
-//                                } else {
-//                                    File imgFile = new File(pathList.get(i));
-//                                    myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-//                                }
-//                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                                myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-//                                String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
-//                                jsonArray.put(a);
-//                            } catch (Exception e) {
-//                                e.getMessage();
-//                            }
-//                        }
-//
-//                        jsonObject.put("project_id", projectId);
-//                        jsonObject.put("location_id", locationId);
-//                        jsonObject.put("progress_category_id", progress_category_id);
-//                        jsonObject.put("progress_status", statusRadioButton.getText());
-//                        jsonObject.put("progress_date", progressDateEditText.getText().toString());
-//                        jsonObject.put("remark", remarkEditText.getText().toString());
-//                        jsonObject.put("registered_by", user.getUserId());
-//                        jsonObject.put("image", jsonArray);
-//                        jsonObject.put("request_type", uploadButton.getText().toString());
-//                    } catch (JSONException e) {
-//                        Log.e("JSONObject Here", e.toString());
-//                    }
-//                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URLs.URL_INSERTPROGRESSCATEGORY, jsonObject,
-//                            new Response.Listener<JSONObject>() {
-//                                @Override
-//                                public void onResponse(JSONObject jsonObject) {
-//                                    Log.e("Message from server", jsonObject.toString());
-//                                    dialog.dismiss();
-//                                    messageText.setText("Image Uploaded Successfully");
-//                                    Toast.makeText(getApplication(), "Saved Successfully", Toast.LENGTH_SHORT).show();
-//                                    Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                            }, new Response.ErrorListener() {
-//                        @Override
-//                        public void onErrorResponse(VolleyError volleyError) {
-//                            Log.e("Message from server", volleyError.toString());
-//                            dialog.dismiss();
-//                        }
-//                    });
-//                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
-//                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-//                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-//                    Volley.newRequestQueue(this).add(jsonObjectRequest);
+                    try {
+                        ArrayList<String> str = new ArrayList<String>();
+                        JSONArray jsonArray = new JSONArray();
+
+                        dialog.show();
+                        for (int i = 0; i < pathList.size(); i++) {
+                            try {
+                                Bitmap myBitmap;
+                                if (pathList.get(i).contains("http")) {
+                                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                                    StrictMode.setThreadPolicy(policy);
+
+                                    URL url = new URL(pathList.get(i));
+                                    myBitmap = BitmapFactory.decodeStream((InputStream) url.getContent());
+                                } else if (pathList.get(i).contains("CameraDemo")) {
+                                    Uri file = Uri.parse(pathList.get(i));
+                                    InputStream is = getContentResolver().openInputStream(file);
+                                    Bitmap rotatedImg = BitmapFactory.decodeStream(is);
+
+                                    Matrix matrix = new Matrix();
+                                    matrix.postRotate(90);
+                                    myBitmap = Bitmap.createBitmap(rotatedImg, 0, 0, rotatedImg.getWidth(), rotatedImg.getHeight(), matrix, true);
+                                } else {
+                                    File imgFile = new File(pathList.get(i));
+                                    myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                                }
+                                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                                myBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                                String a = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT);
+                                jsonArray.put(a);
+                            } catch (Exception e) {
+                                e.getMessage();
+                            }
+                        }
+
+                        jsonObject.put("project_id", projectId);
+                        jsonObject.put("location_id", locationId);
+                        jsonObject.put("progress_category_id", progress_category_id);
+                        jsonObject.put("progress_status", statusRadioButton.getText());
+                        jsonObject.put("progress_date", progressDateEditText.getText().toString());
+                        jsonObject.put("remark", remarkEditText.getText().toString());
+                        jsonObject.put("registered_by", user.getUserId());
+                        jsonObject.put("image", jsonArray);
+                        jsonObject.put("request_type", uploadButton.getText().toString());
+                    } catch (JSONException e) {
+                        Log.e("JSONObject Here", e.toString());
+                    }
+                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URLs.URL_INSERTPROGRESSCATEGORY, jsonObject,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject jsonObject) {
+                                    Log.e("Message from server", jsonObject.toString());
+                                    dialog.dismiss();
+                                    messageText.setText("Image Uploaded Successfully");
+                                    Toast.makeText(getApplication(), "Saved Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(AddProgressCategory.this, ProgressStatus.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError volleyError) {
+                            Log.e("Message from server", volleyError.toString());
+                            dialog.dismiss();
+                        }
+                    });
+                    jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(10000,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+                    Volley.newRequestQueue(this).add(jsonObjectRequest);
                 }
                 break;
         }

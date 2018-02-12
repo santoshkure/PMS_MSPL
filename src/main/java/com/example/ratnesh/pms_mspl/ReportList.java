@@ -78,8 +78,8 @@ public class ReportList extends AppCompatActivity {
     }
 
     ArrayList<ReportModel> reports = new ArrayList<>();
-    ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
-    JSONArray locationCountJSONArray;
+//    ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
+//    JSONArray locationCountJSONArray;
 
     private void viewReport() {
 
@@ -92,9 +92,10 @@ public class ReportList extends AppCompatActivity {
 
                             final JSONObject obj = new JSONObject(response);
 
-                            locationCountJSONArray = obj.getJSONArray("location_count");
+                            JSONArray locationCountJSONArray = obj.getJSONArray("location_count");
                             JSONArray locationListJSONArray = obj.getJSONArray("location_list");
                             JSONArray locationJSONArray = obj.getJSONArray("report_list_status");
+                            ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
 
                             Gson gson = new Gson();
                             for (int i = 0; i < locationJSONArray.length(); i++) {
@@ -115,8 +116,13 @@ public class ReportList extends AppCompatActivity {
                                     for (int k = 0; k < reportSatus.size(); k++) {
                                         if (reportSatus.get(k).getCategory_id().equals(category_id) && reportSatus.get(k).getLocation_id().equals(location_id)) {
                                             isMatched = true;
-                                            if (reportSatus.get(k).getProgress_status().equals("Yes")) {
+                                            if (reportSatus.get(k).getProgress_status() != null) {
+                                                if (reportSatus.get(k).getProgress_status().equals("Yes")) {
 
+                                                } else {
+                                                    isComplected = false;
+                                                    break;
+                                                }
                                             } else {
                                                 isComplected = false;
                                                 break;
@@ -138,8 +144,7 @@ public class ReportList extends AppCompatActivity {
                                 partially = 0;
                             }
 
-                            createRowData(reports);
-
+                            createRowData(reports, locationCountJSONArray);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -175,7 +180,7 @@ public class ReportList extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void createRowData(final ArrayList<ReportModel> reports) throws JSONException {
+    private void createRowData(final ArrayList<ReportModel> reports, JSONArray locationCountJSONArray) throws JSONException {
         row1 = new TableRow(ReportList.this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row1.setBackground(getResources().getDrawable(R.drawable.border));

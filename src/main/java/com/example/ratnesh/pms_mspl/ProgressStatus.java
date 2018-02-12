@@ -92,8 +92,12 @@ public class ProgressStatus extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
+                        locationNameSpinner.setVisibility(View.GONE);
+                        progressCategorySpinner.setVisibility(View.GONE);
                         break;
                     default:
+                        locationNameSpinner.setVisibility(View.GONE);
+                        progressCategorySpinner.setVisibility(View.GONE);
                         //projectId = projectIdArray[position-1];
                         int pos = projectNameSpinner.getSelectedItemPosition();
                         projectId = projectIdArray[pos - 1];
@@ -226,6 +230,7 @@ public class ProgressStatus extends AppCompatActivity {
                             SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
                             SpinerAdapter.add("Select Location");
                             SpinerAdapter.addAll(locationNameArray);
+                            locationNameSpinner.setVisibility(View.VISIBLE);
                             locationNameSpinner.setAdapter(SpinerAdapter);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -269,23 +274,28 @@ public class ProgressStatus extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             final JSONObject obj = new JSONObject(response);
+                            String str = obj.getString("exist");
 
-                            JSONArray progressCategoryList = obj.getJSONArray("progress_cate_list");
+                            if (!str.equals("false")) {
+                                JSONArray progressCategoryList = obj.getJSONArray("progress_cate_list");
 
-                            progressCategoryIdArray = new String[progressCategoryList.length()];
-                            progressCategoryNameArray = new String[progressCategoryList.length()];
+                                progressCategoryIdArray = new String[progressCategoryList.length()];
+                                progressCategoryNameArray = new String[progressCategoryList.length()];
 
-                            for (int i = 0; i < progressCategoryList.length(); i++) {
-                                JSONObject actor = progressCategoryList.getJSONObject(i);
-                                progressCategoryIdArray[i] = actor.getString("c_progress_id");
-                                progressCategoryNameArray[i] = actor.getString("c_progress_name");
+                                for (int i = 0; i < progressCategoryList.length(); i++) {
+                                    JSONObject actor = progressCategoryList.getJSONObject(i);
+                                    progressCategoryIdArray[i] = actor.getString("c_progress_id");
+                                    progressCategoryNameArray[i] = actor.getString("c_progress_name");
+                                }
+                                SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
+                                SpinerAdapter.add("Select Progress Category");
+                                SpinerAdapter.addAll(progressCategoryNameArray);
+                                progressCategorySpinner.setVisibility(View.VISIBLE);
+                                progressCategorySpinner.setAdapter(SpinerAdapter);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "You have not assigned any task to do on this location", Toast.LENGTH_LONG).show();
                             }
-                            SpinerAdapter = new ArrayAdapter<String>(ProgressStatus.this, android.R.layout.simple_spinner_dropdown_item);
-                            SpinerAdapter.add("Select Progress Category");
-                            SpinerAdapter.addAll(progressCategoryNameArray);
-                            progressCategorySpinner.setAdapter(SpinerAdapter);
                         } catch (JSONException e) {
-                            Toast.makeText(getApplicationContext(), "You have not assigned any task to do on this location", Toast.LENGTH_LONG).show();
                             e.printStackTrace();
                             Log.d("dsadd", String.valueOf(e));
                         }
