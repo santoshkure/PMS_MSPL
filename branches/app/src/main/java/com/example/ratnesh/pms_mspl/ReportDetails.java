@@ -127,12 +127,11 @@ public class ReportDetails extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void CountComp_Pending(ArrayList<ReportDetailModel> reports) {
+    private void CountComplete_Pending(ArrayList<ReportDetailModel> reports) {
         try {
             ArrayList<String> Progress_Categories = new ArrayList<>();
             ArrayList<TempModel> Progress_Categories1 = new ArrayList<TempModel>();
-            ArrayList<ReportDetailModel> reportsList = new ArrayList<>();
-            String CatName = "";
+
             for (int i = 0; i < reports.size(); i++) {
                 for (int j = 0; j < reports.get(i).getProjectDetail().size(); j++) {
                     String str = reports.get(i).getProjectDetail().get(j).getProjectCategory();
@@ -368,10 +367,10 @@ public class ReportDetails extends AppCompatActivity {
         }
 
         if (status.equals("pending")) {
-            CountComp_Pending(reportsPending);
+            CountComplete_Pending(reportsPending);
 //            prepareListData(reportsPending);
         } else if (status.equals("complected")) {
-            CountComp_Pending(reportsComplected);
+            CountComplete_Pending(reportsComplected);
 //            prepareListData(reportsComplected);
         }
 

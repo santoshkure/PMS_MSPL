@@ -23,8 +23,10 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ratnesh.pms_mspl.Models.CatDetails;
+import com.example.ratnesh.pms_mspl.Models.LocationDetail;
 import com.example.ratnesh.pms_mspl.Models.ReportModel;
-import com.google.gson.Gson;
+import com.example.ratnesh.pms_mspl.Models.CategoryDetail;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,10 +79,6 @@ public class ReportList extends AppCompatActivity {
         startActivity(intent);
     }
 
-    ArrayList<ReportModel> reports = new ArrayList<>();
-//    ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
-//    JSONArray locationCountJSONArray;
-
     private void viewReport() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REPORTS,
@@ -88,63 +86,50 @@ public class ReportList extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         try {
-                            int count = 0, partially = 0, completed = 0;
-
                             final JSONObject obj = new JSONObject(response);
 
-                            JSONArray locationCountJSONArray = obj.getJSONArray("location_count");
-                            JSONArray locationListJSONArray = obj.getJSONArray("location_list");
                             JSONArray locationJSONArray = obj.getJSONArray("report_list_status");
-                            ArrayList<LocationDetails> reportSatus = new ArrayList<LocationDetails>();
+                            ArrayList<LocationDetail> location = new ArrayList<LocationDetail>();
+                            ArrayList<CatDetails> categoryList = new ArrayList<CatDetails>();
+                            CatDetails category = new CatDetails();
+                            String CatName = "";
 
-                            Gson gson = new Gson();
                             for (int i = 0; i < locationJSONArray.length(); i++) {
-                                LocationDetails founderArray = gson.fromJson(String.valueOf(locationJSONArray.get(i)), LocationDetails.class);
-                                reportSatus.add(founderArray);
-                            }
+                                JSONObject item = locationJSONArray.getJSONObject(i);
 
-                            Boolean isComplected = false;
-                            Boolean isMatched = false;
-                            complectedStatusArray = new ArrayList<String>();
-                            pendingStatusArray = new ArrayList<String>();
-                            for (int i = 0; i < locationCountJSONArray.length(); i++) {
-                                String category_id = locationCountJSONArray.getJSONObject(i).getString("category_id");
-                                for (int j = 0; j < locationListJSONArray.length(); j++) {
-                                    String location_id = locationListJSONArray.getJSONObject(j).getString("location_id");
-                                    isComplected = true;
-                                    isMatched = false;
-                                    for (int k = 0; k < reportSatus.size(); k++) {
-                                        if (reportSatus.get(k).getCategory_id().equals(category_id) && reportSatus.get(k).getLocation_id().equals(location_id)) {
-                                            isMatched = true;
-                                            if (reportSatus.get(k).getProgress_status() != null) {
-                                                if (reportSatus.get(k).getProgress_status().equals("Yes")) {
-
-                                                } else {
-                                                    isComplected = false;
-                                                    break;
-                                                }
-                                            } else {
-                                                isComplected = false;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if (isMatched) {
-                                        if (isComplected) {
-                                            completed = completed + 1;
-                                        } else {
-                                            partially = partially + 1;
-                                        }
+                                if (!CatName.equals(item.getString("category"))) {
+                                    CatName = item.getString("category");
+                                    category.setLocationDetail(location);
+                                    if (i != 0) {
+                                        categoryList.add(category);
                                     }
 
+                                    category = new CatDetails();
+                                    location = new ArrayList<LocationDetail>();
+                                    category.setCatName(CatName);
+
+                                    LocationDetail locationDetail = new LocationDetail();
+                                    locationDetail.setLocationId(item.getString("location_id"));
+                                    locationDetail.setCategoryId(item.getString("category_id"));
+                                    locationDetail.setProjectId(item.getString("project_id"));
+                                    locationDetail.setProgressStatus(item.getString("progress_status"));
+                                    location.add(locationDetail);
+                                } else {
+                                    LocationDetail locationDetail = new LocationDetail();
+                                    locationDetail.setLocationId(item.getString("location_id"));
+                                    locationDetail.setCategoryId(item.getString("category_id"));
+                                    locationDetail.setProjectId(item.getString("project_id"));
+                                    locationDetail.setProgressStatus(item.getString("progress_status"));
+                                    location.add(locationDetail);
                                 }
-                                complectedStatusArray.add(String.valueOf(completed));
-                                pendingStatusArray.add(String.valueOf(partially));
-                                completed = 0;
-                                partially = 0;
+
+                                if (i == locationJSONArray.length() - 1) {
+                                    category.setLocationDetail(location);
+                                    categoryList.add(category);
+                                }
                             }
 
-                            createRowData(reports, locationCountJSONArray);
+                            CountComplete_Pending(categoryList);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -180,7 +165,69 @@ public class ReportList extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void createRowData(final ArrayList<ReportModel> reports, JSONArray locationCountJSONArray) throws JSONException {
+
+    private void CountComplete_Pending(ArrayList<CatDetails> categoryList) {
+        try {
+            ArrayList<CategoryDetail> data = new ArrayList<CategoryDetail>();
+            String locId = "";
+            boolean flag = false;
+
+            for (int i = 0; i < categoryList.size(); i++) {
+                CategoryDetail t = new CategoryDetail();
+                t.setCategory(categoryList.get(i).getCatName());
+
+                for (int j = 0; j < categoryList.get(i).getLocationDetail().size(); j++) {
+                    if (!locId.equals(categoryList.get(i).getLocationDetail().get(j).getLocationId())) {
+                        if (j != 0) {
+                            t.setCategoryId(categoryList.get(i).getLocationDetail().get(j).getCategoryId());
+                            if (flag) {
+                                int pend = t.getPending_count();
+                                t.setPending_count(pend + 1);
+                            } else {
+                                int comp = t.getComplete_count();
+                                t.setComplete_count(comp + 1);
+                            }
+                            flag = false;
+                        }
+
+                        locId = categoryList.get(i).getLocationDetail().get(j).getLocationId();
+                        int count = t.getLoc_count();
+                        t.setLoc_count(count + 1);
+
+                        if (!categoryList.get(i).getLocationDetail().get(j).getProgressStatus().equals("Yes")) {
+                            flag = true;
+                        }
+                    } else {
+                        if (!flag) {
+                            if (!categoryList.get(i).getLocationDetail().get(j).getProgressStatus().equals("Yes")) {
+                                flag = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (j == categoryList.get(i).getLocationDetail().size() -1) {
+                        t.setCategoryId(categoryList.get(i).getLocationDetail().get(j).getCategoryId());
+                        if (flag) {
+                            int pend = t.getPending_count();
+                            t.setPending_count(pend + 1);
+                        } else {
+                            int comp = t.getComplete_count();
+                            t.setComplete_count(comp + 1);
+                        }
+                        flag = false;
+                    }
+                }
+                data.add(t);
+            }
+
+            createRowData(data);
+        } catch (Exception e) {
+            e.getMessage();
+        }
+    }
+
+    private void createRowData(ArrayList<CategoryDetail> data) throws JSONException {
         row1 = new TableRow(ReportList.this);
         TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
         row1.setBackground(getResources().getDrawable(R.drawable.border));
@@ -213,50 +260,38 @@ public class ReportList extends AppCompatActivity {
 
         displayTableLayout.addView(row1, 0);
 
-        for (int i = 0; i < locationCountJSONArray.length(); i++) {
-            JSONObject actor = locationCountJSONArray.getJSONObject(i);
-
-            ReportModel report = new ReportModel();
-            report.setCat_id(actor.getString("category_id"));
-            report.setCat_name(actor.getString("category_location"));
-            report.setLocation_name(actor.getString("category_location"));
-            report.setCompleted(complectedStatusArray.get(i));
-            report.setPending(pendingStatusArray.get(i));
-
-            reports.add(report);
-
-            final String locationCount = actor.getString("location_count");
-            final String category = actor.getString("category_location");
+        for (int i = 0; i < data.size(); i++) {
+            final CategoryDetail actor = data.get(i);
 
             row2 = new TableRow(ReportList.this);
             row2.setBackground(getResources().getDrawable(R.drawable.border));
             row2.setLayoutParams(lp);
 
             locationNameTextView = new TextView(ReportList.this);
-            locationNameTextView.setText(category);
+            locationNameTextView.setText(actor.getCategory());
             locationNameTextView.setGravity(Gravity.CENTER);
             locationNameTextView.setPadding(10, 10, 10, 10);
             row2.addView(locationNameTextView);
 
             categoryTextView = new TextView(ReportList.this);
-            categoryTextView.setText(locationCount);
+            categoryTextView.setText(String.valueOf(actor.getLoc_count()));
             categoryTextView.setGravity(Gravity.CENTER);
             categoryTextView.setPadding(10, 10, 10, 10);
             row2.addView(categoryTextView);
 
             complectedTextView = new TextView(ReportList.this);
-            complectedTextView.setText(complectedStatusArray.get(i));
+            complectedTextView.setText(String.valueOf(actor.getComplete_count()));
             complectedTextView.setGravity(Gravity.CENTER);
             complectedTextView.setPadding(10, 10, 10, 10);
             complectedTextView.setId(i);
 
-            if (!(Integer.parseInt(complectedStatusArray.get(i)) == 0)) {
+            if (actor.getComplete_count() != 0) {
                 complectedTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
                 complectedTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent complectedIntent = new Intent(getApplicationContext(), ReportDetails.class);
-                        complectedIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
+                        complectedIntent.putExtra("category_id", actor.getCategoryId());
                         complectedIntent.putExtra("project_id", projectId);
                         complectedIntent.putExtra("status", "complected");
                         startActivity(complectedIntent);
@@ -267,18 +302,18 @@ public class ReportList extends AppCompatActivity {
             row2.addView(complectedTextView);
 
             pendingTextView = new TextView(ReportList.this);
-            pendingTextView.setText(pendingStatusArray.get(i));
+            pendingTextView.setText(String.valueOf(actor.getPending_count()));
             pendingTextView.setGravity(Gravity.CENTER);
             pendingTextView.setPadding(10, 10, 10, 10);
             pendingTextView.setId(i);
 
-            if (!(Integer.parseInt(pendingStatusArray.get(i)) == 0)) {
+            if (actor.getPending_count() != 0) {
                 pendingTextView.setTextColor(getResources().getColor(R.color.colorPrimary));
                 pendingTextView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent pendingIntent = new Intent(getApplicationContext(), ReportDetails.class);
-                        pendingIntent.putExtra("category_id", reports.get(view.getId()).getCat_id());
+                        pendingIntent.putExtra("category_id", actor.getCategoryId());
                         pendingIntent.putExtra("project_id", projectId);
                         pendingIntent.putExtra("status", "pending");
                         startActivity(pendingIntent);
@@ -288,9 +323,9 @@ public class ReportList extends AppCompatActivity {
             }
             row2.addView(pendingTextView);
 
-            TotalLoc = TotalLoc + Integer.parseInt(locationCount);
-            TotalCompleted = TotalCompleted + Integer.parseInt(complectedStatusArray.get(i));
-            TotalPending = TotalPending + Integer.parseInt(pendingStatusArray.get(i));
+            TotalLoc = TotalLoc + actor.getLoc_count();
+            TotalCompleted = TotalCompleted + actor.getComplete_count();
+            TotalPending = TotalPending + actor.getPending_count();
 
             indexRow = i;
             displayTableLayout.addView(row2, ++indexRow);
@@ -329,7 +364,6 @@ public class ReportList extends AppCompatActivity {
         row3.addView(TempTextView);
 
         displayTableLayout.addView(row3, ++indexRow);
-
 
     }
 
