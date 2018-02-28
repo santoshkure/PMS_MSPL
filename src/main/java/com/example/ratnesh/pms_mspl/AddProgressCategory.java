@@ -213,44 +213,39 @@ public class AddProgressCategory extends AppCompatActivity implements View.OnCli
                             for (int i = 0; i < progressCategoryDetails.length(); i++) {
                                 JSONObject actor = progressCategoryDetails.getJSONObject(i);
 
-                                if (exits.equals("false")) {
-                                    progressDate = "";
-                                    progressStatus = "";
-                                    progressRemark = "";
-                                } else {
-                                    progressDate = actor.getString("progress_date");
-                                    progressStatus = actor.getString("progress_status");
+                                progressDate = actor.getString("progress_date");
+                                progressStatus = actor.getString("progress_status");
 
-                                    if (progressStatus.equals("Yes")) {
-                                        yesRadioButton.setChecked(true);
-                                        uploadButton.setVisibility(View.GONE);
-                                        btnselectpic.setVisibility(View.GONE);
-                                        noRadioButton.setEnabled(false);
-                                        partiallyRadioButton.setEnabled(false);
-                                    } else if (progressStatus.equals("No")) {
-                                        noRadioButton.setChecked(true);
-                                    } else if (progressStatus.equals("partially")) {
-                                        partiallyRadioButton.setChecked(true);
-                                    }
-                                    progressRemark = actor.getString("progress_remark");
-                                    String imagePath = actor.getString("image_path");
-                                    if (!imagePath.equals("null")) {
-                                        pathList = new ArrayList<String>();
-                                        if (imagePath.contains(",")) {
-                                            String[] str = imagePath.split(",");
-                                            for (int j = 0; j < str.length; j++) {
-                                                pathList.add(str[j]);
-                                            }
-                                        } else {
-                                            pathList.add(imagePath);
-                                        }
-                                    }
-
-                                    if (pathList != null && !pathList.isEmpty()) {
-                                        SetToGallary();
-                                    }
-                                    uploadButton.setText("Update");
+                                if (progressStatus.equals("Yes")) {
+                                    yesRadioButton.setChecked(true);
+                                    uploadButton.setVisibility(View.GONE);
+                                    btnselectpic.setVisibility(View.GONE);
+                                    noRadioButton.setEnabled(false);
+                                    partiallyRadioButton.setEnabled(false);
+                                } else if (progressStatus.equals("No")) {
+                                    noRadioButton.setChecked(true);
+                                } else if (progressStatus.equals("Partially")) {
+                                    partiallyRadioButton.setChecked(true);
                                 }
+                                progressRemark = actor.getString("progress_remark");
+                                String imagePath = actor.getString("image_path");
+                                if (!imagePath.equals("null")) {
+                                    pathList = new ArrayList<String>();
+                                    if (imagePath.contains(",")) {
+                                        String[] str = imagePath.split(",");
+                                        for (int j = 0; j < str.length; j++) {
+                                            pathList.add(str[j]);
+                                        }
+                                    } else {
+                                        pathList.add(imagePath);
+                                    }
+                                }
+
+                                if (pathList != null && !pathList.isEmpty()) {
+                                    SetToGallary();
+                                }
+                                uploadButton.setText("Update");
+
                                 progressDateEditText.setText(progressDate);
                                 remarkEditText.setText(progressRemark);
                             }
