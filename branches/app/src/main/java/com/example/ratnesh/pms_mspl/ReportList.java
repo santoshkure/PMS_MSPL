@@ -199,9 +199,9 @@ public class ReportList extends AppCompatActivity {
                         }
                     } else {
                         if (!flag) {
-                            if (!categoryList.get(i).getLocationDetail().get(j).getProgressStatus().equals("Yes")) {
+                            if (!categoryList.get(i).getLocationDetail().get(j).getProgressStatus().equals("Yes") ||
+                                    categoryList.get(i).getLocationDetail().get(j).getProgressStatus().equals("null")) {
                                 flag = true;
-                                break;
                             }
                         }
                     }
@@ -293,6 +293,7 @@ public class ReportList extends AppCompatActivity {
                         Intent complectedIntent = new Intent(getApplicationContext(), ReportDetails.class);
                         complectedIntent.putExtra("category_id", actor.getCategoryId());
                         complectedIntent.putExtra("project_id", projectId);
+                        complectedIntent.putExtra("project_name", projectName);
                         complectedIntent.putExtra("status", "complected");
                         startActivity(complectedIntent);
                     }

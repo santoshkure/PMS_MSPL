@@ -9,6 +9,7 @@
         android:layout_height="fill_parent"
         android:fitsSystemWindows="true">
 
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -16,46 +17,15 @@
             android:layout_gravity="center"
             android:textAlignment="center">
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="fill_parent"
-                android:layout_marginBottom="2dp"
-                android:paddingLeft="@dimen/padding_large"
-                android:paddingRight="@dimen/padding_large"
-                android:paddingTop="@dimen/padding_normal"
-                android:paddingBottom="@dimen/padding_normal"
-                android:background="@drawable/gardient_2"
-                android:id="@+id/projects_item">
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_height="fill_parent"
-                    android:layout_width="0dp">
-
-                    <ImageView
-                        android:layout_width="70dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/projects"
-                        android:textStyle="bold"
-                        android:paddingLeft="@dimen/padding_large"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_height="fill_parent"
-                    android:layout_width="0dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/site_name"
-                        android:text="Projects"
-                        android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/font_large"
-                        android:gravity="left|center_vertical"/>
-                </LinearLayout>
-
-            </LinearLayout>
+                android:background="@color/colorPrimary"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:padding="@dimen/padding_normal"
+                android:textSize="@dimen/font_medium"
+                android:text="Project Management System (MSPL)"/>
 
 
             <LinearLayout
@@ -93,7 +63,7 @@
                         android:id="@+id/sit_name"
                         android:text="Progress Status"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/font_large"
+                        android:textSize="21dp"
                         android:gravity="left|center_vertical"/>
                 </LinearLayout>
 
@@ -135,7 +105,7 @@
                         android:id="@+id/sit_na"
                         android:text="Reports"
                         android:textColor="@color/colorWhite"
-                        android:textSize="@dimen/font_large"
+                        android:textSize="21dp"
                         android:gravity="left|center_vertical"/>
                 </LinearLayout>
 

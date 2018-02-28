@@ -14,6 +14,12 @@
             </shape>
      </item>
 
+        <item>
+            <bitmap android:gravity="center|right"
+                android:src="@drawable/down_arrow" />
+            // you can use any other image here, instead of default_holo_dark_am
+        </item>
+
     </layer-list></item>
 
 </selector>
