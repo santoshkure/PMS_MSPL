@@ -14,16 +14,32 @@
         android:orientation="vertical"
         android:background="#f4f4f4" >
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:background="@color/colorPrimary">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_normal"
+                android:textSize="@dimen/font_medium"
+                android:gravity="center"
+                android:textColor="@color/colorWhite"
+                android:id="@+id/project_name"/>
+
+        </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Project Progress Report"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/margin_small"
             android:padding="@dimen/margin_medium"
+            android:layout_marginBottom="2dp"
             android:background="@color/colorWhite"
             android:textAlignment="center"
-            android:textSize="16dp"/>
+            android:textSize="@dimen/font_large"/>
 
         <HorizontalScrollView
             android:layout_width="match_parent"

@@ -43,10 +43,10 @@ import java.util.Map;
 
 public class ReportDetails extends AppCompatActivity {
 
-    private String projectId, categoryId, status;
+    private String projectId, projectName, categoryId, status;
     TableLayout displayTableLayout;
     private TableRow row1, row2;
-    private TextView TempTextView, processNameTextView, locCountTextView, complectedTextView, pendingTextView;
+    private TextView projectNameTextView, TempTextView, processNameTextView, locCountTextView, complectedTextView, pendingTextView;
     ExpandableListView reportDetailsDataListView;
     ExpandableListAdapter listAdapter;
     List<String> listDataHeader;
@@ -65,8 +65,12 @@ public class ReportDetails extends AppCompatActivity {
 
         Intent intent = getIntent();
         projectId = intent.getStringExtra("project_id");
+        projectName = intent.getStringExtra("project_name");
         categoryId = intent.getStringExtra("category_id");
         status = intent.getStringExtra("status");
+
+        projectNameTextView = (TextView) findViewById(R.id.project_name);
+        projectNameTextView.setText(projectName);
 
         displayTableLayout = (TableLayout) findViewById(R.id.display_table_layout);
         reportDetailsDataListView = (ExpandableListView) findViewById(R.id.lvExp);

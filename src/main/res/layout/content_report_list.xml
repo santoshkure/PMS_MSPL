@@ -22,30 +22,16 @@
                 android:orientation="horizontal"
                 android:layout_height="wrap_content"
                 android:layout_width="fill_parent"
-                android:background="@drawable/border">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_height="fill_parent"
-                    android:layout_width="0dp">
+                android:background="@color/colorPrimary">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Project Name"
                         android:padding="@dimen/padding_normal"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:layout_height="fill_parent"
-                    android:layout_width="0dp">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="@dimen/padding_normal"
+                        android:textSize="@dimen/font_medium"
+                        android:gravity="center"
+                        android:textColor="@color/colorWhite"
                         android:id="@+id/project_name"/>
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -53,8 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Report"
-                android:textStyle="bold"
                 android:layout_marginTop="@dimen/margin_small"
+                android:layout_marginBottom="2dp"
                 android:padding="@dimen/margin_medium"
                 android:background="@color/colorWhite"
                 android:textAlignment="center"

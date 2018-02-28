@@ -1,7 +1,5 @@
 package com.example.ratnesh.pms_mspl.Models;
 
-import com.example.ratnesh.pms_mspl.ProjectDetails;
-
 import java.util.ArrayList;
 
 /**

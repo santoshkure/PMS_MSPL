@@ -25,18 +25,11 @@ public class HomeNew extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_home_new, container, false);
 
-        project_layout = (LinearLayout) rootView.findViewById(R.id.projects_item);
+
         progress_layout = (LinearLayout) rootView.findViewById(R.id.progress_item);
         report_layout = (LinearLayout) rootView.findViewById(R.id.reports_item);
 
-        project_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent project_details_intent = new Intent(getActivity().getApplicationContext(), Projects.class);
-                startActivity(project_details_intent);
-            }
-        });
-        project_layout.setVisibility(View.GONE);
+
 
         progress_layout.setOnClickListener(new View.OnClickListener() {
             @Override
